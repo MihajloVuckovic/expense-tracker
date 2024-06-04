@@ -52,14 +52,14 @@ public class GenericController<T,DTO, ID> {
     @PostMapping("")
     public ResponseEntity<String> create(@RequestBody T t){
         T createdEntity = service.save(t);
-        return new ResponseEntity<>("Entitet je kreiran!",HttpStatus.CREATED);
+        return new ResponseEntity<>("The entity has been created!",HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable ID id){
         if(!service.existsById(id)){
-            return new ResponseEntity<>("Trazeni entitet nije pronadjen!",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Entity was not found!",HttpStatus.NOT_FOUND);
         }
         service.remove(id);
-        return new ResponseEntity<>("Entitet uspesno obrisan!",HttpStatus.OK);
+        return new ResponseEntity<>("Entity successfuly removed!",HttpStatus.OK);
     }
 }

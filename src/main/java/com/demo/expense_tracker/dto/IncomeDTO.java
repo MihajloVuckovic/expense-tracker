@@ -18,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class IncomeDTO {
     Long id;
-    double amount;
     String description;
+    double amount;
     Long income_group_id;
 }
