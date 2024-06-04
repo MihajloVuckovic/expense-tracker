@@ -36,6 +36,8 @@ public class Income {
     @Column
     private double amount;
     @ManyToOne
-    @JoinColumn(name="income_group_id")
+    @JoinColumn(name="income_group_id", referencedColumnName="id", insertable=false, updatable=false)
     private IncomeGroup incomeGroup;
+
+    private Long income_group_id;
 }
