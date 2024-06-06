@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.demo.expense_tracker.dto.ExpenseDTO;
 import com.demo.expense_tracker.model.Expense;
 import com.demo.expense_tracker.repositories.ExpenseRepository;
+import com.demo.expense_tracker.utils.TokenUtils;
 
 /**
  *
@@ -18,14 +19,24 @@ import com.demo.expense_tracker.repositories.ExpenseRepository;
  */
 @Service
 public class ExpenseService extends GenericServiceImpl<Expense, ExpenseDTO, Long>{
-    
+
+    private TokenUtils tokenUtils;
+
     @Autowired
     public ExpenseService(ExpenseRepository expenseRepository){
         super(expenseRepository);
+        this.tokenUtils= new TokenUtils();
     }
     @Override
     protected Class<ExpenseDTO> getTypeOfDTO() {
         return ExpenseDTO.class;
+    }
+
+    @Override
+    public Expense save(Expense t) {
+        Long user_id = tokenUtils.getUserIdFromToken();
+        t.setUser_id(user_id);
+        return super.save(t);
     }
 
 }

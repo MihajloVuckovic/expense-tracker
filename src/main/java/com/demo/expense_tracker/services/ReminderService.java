@@ -124,6 +124,7 @@ public class ReminderService extends GenericServiceImpl<Reminder, ReminderDTO, L
         } else if(ReminderType.MONTHLY.equals(t.getType())){
             t.setReminderDay(LocalDate.now().plusMonths(1));
         }
+        t.setUser_id(user_id);
         return super.save(t);
     }
 

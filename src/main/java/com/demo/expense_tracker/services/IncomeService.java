@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.demo.expense_tracker.dto.IncomeDTO;
 import com.demo.expense_tracker.model.Income;
 import com.demo.expense_tracker.repositories.IncomeRepository;
+import com.demo.expense_tracker.utils.TokenUtils;
 
 /**
  *
@@ -18,13 +19,24 @@ import com.demo.expense_tracker.repositories.IncomeRepository;
  */
 @Service
 public class IncomeService extends GenericServiceImpl<Income, IncomeDTO, Long> {
+    
+    private TokenUtils tokenUtils;
+
     @Autowired
     public IncomeService(IncomeRepository incomeRepository){
-        super(incomeRepository); 
+        super(incomeRepository);
+        this.tokenUtils= new TokenUtils(); 
     }
     @Override
     protected Class<IncomeDTO> getTypeOfDTO() {
         return IncomeDTO.class;
+    }
+
+    @Override
+    public Income save(Income t) {
+        Long user_id = tokenUtils.getUserIdFromToken();
+        t.setUser_id(user_id);
+        return super.save(t);
     }
 
 
