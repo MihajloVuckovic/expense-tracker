@@ -13,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.demo.expense_tracker.dto.ReminderDTO;
@@ -26,6 +23,7 @@ import com.demo.expense_tracker.model.User;
 import com.demo.expense_tracker.repositories.ExpenseRepository;
 import com.demo.expense_tracker.repositories.ReminderRepository;
 import com.demo.expense_tracker.repositories.UserRepository;
+import com.demo.expense_tracker.utils.TokenUtils;
 
 /**
  *
@@ -34,7 +32,8 @@ import com.demo.expense_tracker.repositories.UserRepository;
 @Service
 public class ReminderService extends GenericServiceImpl<Reminder, ReminderDTO, Long> {
     
-
+    private TokenUtils tokenUtils;
+    
     @Autowired
     private UserRepository userRepo;
     
@@ -50,6 +49,7 @@ public class ReminderService extends GenericServiceImpl<Reminder, ReminderDTO, L
     @Autowired
     public ReminderService(ReminderRepository reminderRepository){
         super(reminderRepository);
+        this.tokenUtils= new TokenUtils();
     }
 
     @Override
@@ -114,7 +114,7 @@ public class ReminderService extends GenericServiceImpl<Reminder, ReminderDTO, L
 
     @Override
     public Reminder save(Reminder t) {
-        Long user_id = getUserIdFromToken();
+        Long user_id = tokenUtils.getUserIdFromToken();
         Reminder existingReminder = reminderRepository.findByUser_idAndActive(user_id, true);
         if(existingReminder != null && t.isActive()){
             t.setActive(false);
@@ -127,12 +127,5 @@ public class ReminderService extends GenericServiceImpl<Reminder, ReminderDTO, L
         return super.save(t);
     }
 
-    private Long getUserIdFromToken() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return ((User) userDetails).getId();
-        }
-        return null;
-    }
+    
 }

@@ -12,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.expense_tracker.dto.IncomeDTO;
 import com.demo.expense_tracker.model.Income;
-import com.demo.expense_tracker.model.User;
 import com.demo.expense_tracker.pdf_generator.EmailService;
 import com.demo.expense_tracker.pdf_generator.PDFGenerator;
 import com.demo.expense_tracker.services.IncomeService;
+import com.demo.expense_tracker.utils.TokenUtils;
 
 /**
  *
@@ -34,6 +31,7 @@ import com.demo.expense_tracker.services.IncomeService;
 @RestController
 @RequestMapping("/api/dashboard/incomes")
 public class IncomeController extends GenericController<Income, IncomeDTO, Long>{
+    private TokenUtils tokenUtils;
     @Autowired
     private EmailService emailService;
     @Autowired
@@ -41,6 +39,7 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
     @Autowired
     public IncomeController(IncomeService incomeService){
         super(incomeService);
+        this.tokenUtils= new TokenUtils();
     }
 
     @GetMapping(value = "/export/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
@@ -59,7 +58,7 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
 
         ByteArrayOutputStream pdfOutputStream = PDFGenerator.generatePdf(incomes, IncomeDTO.class);
 
-        String recipientEmail = getUserEmailFromToken();
+        String recipientEmail = tokenUtils.getUserEmailFromToken();
         emailService.sendEmailWithAttachment(
                 recipientEmail,
                 "Incomes PDF",
@@ -71,12 +70,5 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
         return new ResponseEntity<>("Email sent to " + recipientEmail, HttpStatus.OK);
     }
 
-    private String getUserEmailFromToken() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return ((User) userDetails).getEmail();
-        }
-        return null;
-    }
+    
 }

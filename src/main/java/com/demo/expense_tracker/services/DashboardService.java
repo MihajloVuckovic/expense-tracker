@@ -25,6 +25,7 @@ import com.demo.expense_tracker.model.User;
 import com.demo.expense_tracker.repositories.ExpenseRepository;
 import com.demo.expense_tracker.repositories.IncomeRepository;
 import com.demo.expense_tracker.repositories.ReminderRepository;
+import com.demo.expense_tracker.utils.TokenUtils;
 
 /**
  *
@@ -32,11 +33,13 @@ import com.demo.expense_tracker.repositories.ReminderRepository;
  */
 @Service
 public class DashboardService {
-    
+
+    private TokenUtils tokenUtils;
     private ModelMapper mapper;
 
     public DashboardService(){
         this.mapper= new ModelMapper();
+        this.tokenUtils= new TokenUtils();
     }
 
     @Autowired
@@ -49,7 +52,7 @@ public class DashboardService {
     private ReminderRepository reminderRepository;
 
     public ReminderDTO getReminderDetails(){
-        Long user_id = getUserIdFromToken();
+        Long user_id = tokenUtils.getUserIdFromToken();
         Reminder activeReminder = reminderRepository.findByUser_idAndActive(user_id,true);
         ReminderDTO activeReminderDTO = new ReminderDTO();
         mapper.map(activeReminder, activeReminderDTO);
@@ -57,7 +60,7 @@ public class DashboardService {
     }
 
     public Double getTotalAmount() {
-        Long user_id = getUserIdFromToken();
+        Long user_id = tokenUtils.getUserIdFromToken();
         Double totalExpenses = expenseRepository.findByUser_id(user_id)
                 .stream()
                 .mapToDouble(Expense::getAmount)
@@ -72,7 +75,7 @@ public class DashboardService {
     }
 
     public List<ExpenseDTO> getLast5Expenses() {
-        Long user_id = getUserIdFromToken();
+        Long user_id = tokenUtils.getUserIdFromToken();
         List<ExpenseDTO> expenseDTOs = new ArrayList<>();
         List<Expense> expenses = expenseRepository.findTop5ByUser_idOrderByExpenseDateDesc(user_id);
         for(Expense expense : expenses){
@@ -85,7 +88,7 @@ public class DashboardService {
     }
 
     public List<IncomeDTO> getLast5Incomes() {
-        Long user_id = getUserIdFromToken();
+        Long user_id = tokenUtils.getUserIdFromToken();
         List<IncomeDTO> incomeDTOs = new ArrayList<>();
         List<Income> incomes = incomeRepository.findTop5ByUser_idOrderByIncomeDateDesc(user_id);
         for(Income income : incomes){
@@ -96,12 +99,5 @@ public class DashboardService {
         return incomeDTOs;
     }
 
-    private Long getUserIdFromToken() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return ((User) userDetails).getId();
-        }
-        return null;
-    }
+    
 }
