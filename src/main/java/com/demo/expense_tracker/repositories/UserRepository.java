@@ -16,5 +16,7 @@ import com.demo.expense_tracker.model.User;
  * @author mihajlo.vuckovic
  */
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByUsername(String username);
+    Optional<User> findByUsername(String email);
+    Optional<User> findByEmail(String email);
+
 }

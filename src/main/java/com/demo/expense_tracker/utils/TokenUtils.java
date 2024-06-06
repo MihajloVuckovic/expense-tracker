@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.demo.expense_tracker.model.User;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -62,6 +64,8 @@ public class TokenUtils {
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("sub", userDetails.getUsername());
+		claims.put("email", ((User) userDetails).getEmail());
+		claims.put("authorities", userDetails.getAuthorities());
 		claims.put("created", new Date(System.currentTimeMillis()));
 
 		return Jwts.builder()

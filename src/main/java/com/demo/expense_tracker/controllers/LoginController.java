@@ -13,6 +13,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,13 +46,13 @@ public class LoginController {
                     user.getUsername(), user.getPassword());
             Authentication auth = authenticationManager.authenticate(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
-
-            String jwt = tokenUtils.generateToken(userDetailsService.loadUserByUsername(user.getUsername()));
+            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+            String jwt = tokenUtils.generateToken(userDetails);
             return new ResponseEntity<>(jwt, HttpStatus.OK);
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>("Wrong username or password", HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error during authorization", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error during authentification", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
