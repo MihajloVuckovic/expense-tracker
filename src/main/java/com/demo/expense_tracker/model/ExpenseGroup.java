@@ -36,6 +36,6 @@ public class ExpenseGroup {
     private String name;
     @Column
     private String description;
-    @OneToMany(mappedBy="expense_group_id")
+    @OneToMany(mappedBy="expenseGroup")
     private List<Expense> expenses = new ArrayList<>(); 
 }

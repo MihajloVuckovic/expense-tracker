@@ -51,7 +51,7 @@ public class GenericController<T,DTO, ID> {
     }
     @PostMapping("")
     public ResponseEntity<String> create(@RequestBody T t){
-        T createdEntity = service.save(t);
+        service.save(t);
         return new ResponseEntity<>("The entity has been created!",HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
