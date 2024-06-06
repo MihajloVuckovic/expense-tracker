@@ -32,7 +32,7 @@ import com.demo.expense_tracker.services.ExpenseService;
  * @author mihajlo.vuckovic
  */
 @RestController
-@RequestMapping("/api/expenses")
+@RequestMapping("/api/dashboard/expenses")
 public class ExpenseController extends GenericController<Expense, ExpenseDTO, Long> {
     @Autowired
     private EmailService emailService;

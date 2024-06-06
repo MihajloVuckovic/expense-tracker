@@ -18,7 +18,7 @@ import com.demo.expense_tracker.services.ExpenseGroupService;
  * @author mihajlo.vuckovic
  */
 @RestController
-@RequestMapping("/api/expense-groups")
+@RequestMapping("/api/dashboard/expense-groups")
 public class ExpenseGroupController extends GenericController<ExpenseGroup, ExpenseGroupDTO, Long>{
     @Autowired
     public ExpenseGroupController(ExpenseGroupService expenseGroupService){

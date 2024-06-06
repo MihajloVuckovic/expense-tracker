@@ -65,6 +65,7 @@ public class TokenUtils {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("sub", userDetails.getUsername());
 		claims.put("email", ((User) userDetails).getEmail());
+		claims.put("id", ((User) userDetails).getId());
 		claims.put("authorities", userDetails.getAuthorities());
 		claims.put("created", new Date(System.currentTimeMillis()));
 

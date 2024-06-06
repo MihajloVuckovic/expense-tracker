@@ -18,7 +18,7 @@ import com.demo.expense_tracker.services.IncomeGroupService;
  * @author mihajlo.vuckovic
  */
 @RestController
-@RequestMapping("/api/income-groups")
+@RequestMapping("/api/dashboard/income-groups")
 public class IncomeGroupController extends GenericController<IncomeGroup, IncomeGroupDTO, Long>{
     @Autowired
     public IncomeGroupController(IncomeGroupService incomeGroupService){

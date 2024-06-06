@@ -32,7 +32,7 @@ import com.demo.expense_tracker.services.IncomeService;
  * @author mihajlo.vuckovic
  */
 @RestController
-@RequestMapping("/api/incomes")
+@RequestMapping("/api/dashboard/incomes")
 public class IncomeController extends GenericController<Income, IncomeDTO, Long>{
     @Autowired
     private EmailService emailService;

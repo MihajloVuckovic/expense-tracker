@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.demo.expense_tracker.dto.ReminderDTO;
@@ -111,11 +114,25 @@ public class ReminderService extends GenericServiceImpl<Reminder, ReminderDTO, L
 
     @Override
     public Reminder save(Reminder t) {
+        Long user_id = getUserIdFromToken();
+        Reminder existingReminder = reminderRepository.findByUser_idAndActive(user_id, true);
+        if(existingReminder != null && t.isActive()){
+            t.setActive(false);
+        }
         if(ReminderType.WEEKLY.equals(t.getType())){
             t.setReminderDay(LocalDate.now().plusWeeks(1));
         } else if(ReminderType.MONTHLY.equals(t.getType())){
             t.setReminderDay(LocalDate.now().plusMonths(1));
         }
         return super.save(t);
+    }
+
+    private Long getUserIdFromToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return ((User) userDetails).getId();
+        }
+        return null;
     }
 }

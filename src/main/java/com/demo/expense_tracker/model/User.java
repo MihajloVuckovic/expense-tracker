@@ -12,6 +12,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -37,9 +38,11 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-
+    @Column(unique=true)
     private String username;
+    @Column
     private String password;
+    @Column(unique=true)
     private String email;
     @OneToMany(mappedBy="user")
     private List<Reminder> reminders = new ArrayList<>();
