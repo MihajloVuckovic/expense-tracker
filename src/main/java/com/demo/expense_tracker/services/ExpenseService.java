@@ -20,7 +20,7 @@ import com.demo.expense_tracker.utils.TokenUtils;
 @Service
 public class ExpenseService extends GenericServiceImpl<Expense, ExpenseDTO, Long>{
 
-    private TokenUtils tokenUtils;
+    private final TokenUtils tokenUtils;
 
     @Autowired
     public ExpenseService(ExpenseRepository expenseRepository){

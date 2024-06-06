@@ -31,7 +31,7 @@ import com.demo.expense_tracker.utils.TokenUtils;
 @RestController
 @RequestMapping("/api/dashboard/expenses")
 public class ExpenseController extends GenericController<Expense, ExpenseDTO, Long> {
-    private TokenUtils tokenUtils;
+    private final TokenUtils tokenUtils;
     @Autowired
     private EmailService emailService;
     @Autowired

@@ -10,9 +10,6 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.demo.expense_tracker.dto.ExpenseDTO;
@@ -21,7 +18,6 @@ import com.demo.expense_tracker.dto.ReminderDTO;
 import com.demo.expense_tracker.model.Expense;
 import com.demo.expense_tracker.model.Income;
 import com.demo.expense_tracker.model.Reminder;
-import com.demo.expense_tracker.model.User;
 import com.demo.expense_tracker.repositories.ExpenseRepository;
 import com.demo.expense_tracker.repositories.IncomeRepository;
 import com.demo.expense_tracker.repositories.ReminderRepository;
@@ -34,8 +30,8 @@ import com.demo.expense_tracker.utils.TokenUtils;
 @Service
 public class DashboardService {
 
-    private TokenUtils tokenUtils;
-    private ModelMapper mapper;
+    private final TokenUtils tokenUtils;
+    private final ModelMapper mapper;
 
     public DashboardService(){
         this.mapper= new ModelMapper();

@@ -32,7 +32,7 @@ import com.demo.expense_tracker.utils.TokenUtils;
 @Service
 public class ReminderService extends GenericServiceImpl<Reminder, ReminderDTO, Long> {
     
-    private TokenUtils tokenUtils;
+    private final TokenUtils tokenUtils;
     
     @Autowired
     private UserRepository userRepo;

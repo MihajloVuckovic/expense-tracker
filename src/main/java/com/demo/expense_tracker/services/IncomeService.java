@@ -20,7 +20,7 @@ import com.demo.expense_tracker.utils.TokenUtils;
 @Service
 public class IncomeService extends GenericServiceImpl<Income, IncomeDTO, Long> {
     
-    private TokenUtils tokenUtils;
+    private final TokenUtils tokenUtils;
 
     @Autowired
     public IncomeService(IncomeRepository incomeRepository){
