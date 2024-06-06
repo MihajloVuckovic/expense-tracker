@@ -5,9 +5,6 @@
 
 package com.demo.expense_tracker.security;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -42,11 +38,11 @@ public class SecurityConfiguration {
 	
 	@Bean
 	PasswordEncoder getPasswordEncoder() {
-		Map<String, PasswordEncoder> encoders = new HashMap<>();
-		encoders.put("bcrypt", new BCryptPasswordEncoder());
-		DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("bcrypt", encoders);
-		passwordEncoder.setDefaultPasswordEncoderForMatches(encoders.get("bcrypt"));
-		return passwordEncoder;
+		// Map<String, PasswordEncoder> encoders = new HashMap<>();
+		// encoders.put("bcrypt", new BCryptPasswordEncoder());
+		// DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("bcrypt", encoders);
+		// passwordEncoder.setDefaultPasswordEncoderForMatches(encoders.get("bcrypt"));
+		return new BCryptPasswordEncoder();
 	}
 	
 	@Bean
