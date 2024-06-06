@@ -20,5 +20,8 @@ import com.demo.expense_tracker.model.Expense;
  */
 @Repository
 public interface ExpenseRepository extends GenericRepository<Expense, ExpenseDTO, Long> {
-    List<Expense> findByExpenseDateBetweenAndUser_Id(LocalDate startDate, LocalDate endDate, Long user_id);   
+    List<Expense> findByExpenseDateBetweenAndUser_Id(LocalDate startDate, LocalDate endDate, Long user_id);  
+
+    public List<Expense> findTop5ByUser_idOrderByExpenseDateDesc(Long user_id);
+    public List<Expense> findByUser_id(Long user_id);
 }

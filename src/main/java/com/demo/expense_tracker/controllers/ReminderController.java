@@ -18,7 +18,7 @@ import com.demo.expense_tracker.services.ReminderService;
  * @author mihajlo.vuckovic
  */
 @RestController
-@RequestMapping("/api/reminders")
+@RequestMapping("/api/dashboard/reminders")
 public class ReminderController extends GenericController<Reminder, ReminderDTO, Long>{
     @Autowired
     public ReminderController(ReminderService reminderService){

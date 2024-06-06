@@ -6,6 +6,7 @@
 package com.demo.expense_tracker.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class IncomeDTO implements Serializable {
     Long id;
     String description;
     double amount;
+    LocalDate incomeDate;
     Long income_group_id;
     Long user_id;
 }
