@@ -38,6 +38,9 @@ public class Income {
     @ManyToOne
     @JoinColumn(name="income_group_id", referencedColumnName="id", insertable=false, updatable=false)
     private IncomeGroup incomeGroup;
+    @ManyToOne
+    @JoinColumn(name="user_id", referencedColumnName="id", insertable=false, updatable=false)
+    private User user;
 
     private Long income_group_id;
 }

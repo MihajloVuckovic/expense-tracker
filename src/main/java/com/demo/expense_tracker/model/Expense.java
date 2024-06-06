@@ -43,9 +43,8 @@ public class Expense {
     @ManyToOne
     @JoinColumn(name="expense_group_id", referencedColumnName="id", insertable=false,updatable=false, nullable=false)
     private ExpenseGroup expenseGroup;
-
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName="id", insertable=false, updatable=false, nullable=false)
+    @JoinColumn(name="user_id", referencedColumnName="id", insertable=false, updatable=false)
     private User user;
 
     private Long expense_group_id;
