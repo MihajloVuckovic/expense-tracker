@@ -5,7 +5,8 @@
 
 package com.demo.expense_tracker.dto;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 import com.demo.expense_tracker.model.ReminderType;
 
@@ -20,9 +21,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ReminderDTO {
+public class ReminderDTO implements Serializable{
     Long id;
     boolean active;
-    Date reminder_day;
+    LocalDate reminderDay;
     ReminderType type;
+    Long user_id;
 }

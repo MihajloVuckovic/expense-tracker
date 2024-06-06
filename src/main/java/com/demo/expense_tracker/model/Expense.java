@@ -5,6 +5,8 @@
 
 package com.demo.expense_tracker.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,11 +35,21 @@ public class Expense {
     @Column
     private String description;
     @Column
-    private double amount;
+    private Double amount;
+    
+    @Column(name="expense_date")
+    private LocalDate expenseDate;
+
     @ManyToOne
-    @JoinColumn(name="expense_group_id", referencedColumnName="id", insertable=false,updatable=false)
+    @JoinColumn(name="expense_group_id", referencedColumnName="id", insertable=false,updatable=false, nullable=false)
     private ExpenseGroup expenseGroup;
 
+    @ManyToOne
+    @JoinColumn(name="user_id", referencedColumnName="id", insertable=false, updatable=false, nullable=false)
+    private User user;
+
     private Long expense_group_id;
+
+    private Long user_id;
 
 }

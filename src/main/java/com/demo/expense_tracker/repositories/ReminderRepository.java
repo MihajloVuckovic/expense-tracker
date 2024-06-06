@@ -5,6 +5,9 @@
 
 package com.demo.expense_tracker.repositories;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.demo.expense_tracker.dto.ReminderDTO;
@@ -16,5 +19,5 @@ import com.demo.expense_tracker.model.Reminder;
  */
 @Repository
 public interface ReminderRepository extends GenericRepository<Reminder, ReminderDTO, Long>{
-
+    List<Reminder> findByReminderDay(LocalDate date);
 }

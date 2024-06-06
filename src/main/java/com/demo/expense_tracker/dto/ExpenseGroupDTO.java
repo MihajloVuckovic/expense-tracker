@@ -5,6 +5,8 @@
 
 package com.demo.expense_tracker.dto;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ExpenseGroupDTO {
+public class ExpenseGroupDTO implements Serializable {
     Long id;
     String name;
     String description;

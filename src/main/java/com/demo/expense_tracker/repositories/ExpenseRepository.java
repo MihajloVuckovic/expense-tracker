@@ -6,6 +6,9 @@
 package com.demo.expense_tracker.repositories;
 
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.demo.expense_tracker.dto.ExpenseDTO;
@@ -17,5 +20,5 @@ import com.demo.expense_tracker.model.Expense;
  */
 @Repository
 public interface ExpenseRepository extends GenericRepository<Expense, ExpenseDTO, Long> {
-
+    List<Expense> findByExpenseDateBetweenAndUser_Id(LocalDate startDate, LocalDate endDate, Long user_id);   
 }

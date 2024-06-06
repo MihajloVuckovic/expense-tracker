@@ -5,13 +5,17 @@
 
 package com.demo.expense_tracker.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,8 +36,14 @@ public class Reminder {
     private Long id;
     @Column
     private boolean active;
-    @Column
-    private Date reminder_day;
-    @Column 
+    @Column(name="reminder_day")
+    private LocalDate reminderDay;
+    @Enumerated(EnumType.STRING)
     private ReminderType type;
+    @ManyToOne()
+    @JoinColumn(name="user_id", referencedColumnName="id", insertable=false,updatable=false)
+    private User user;
+
+    private Long user_id;
+
 }

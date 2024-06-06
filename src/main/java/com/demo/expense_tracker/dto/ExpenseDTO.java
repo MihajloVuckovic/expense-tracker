@@ -6,6 +6,7 @@
 package com.demo.expense_tracker.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,8 @@ import lombok.Setter;
 public class ExpenseDTO implements Serializable{
     Long id;
     String description;
-    double amount;
+    Double amount;
+    LocalDate expenseDate;
     Long expense_group_id;
+    Long user_id;
 }

@@ -5,7 +5,9 @@
 
 package com.demo.expense_tracker.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +41,12 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
+
+    @OneToMany(mappedBy="user")
+    private List<Reminder> reminders = new ArrayList<>();
+
+    @OneToMany(mappedBy="user")
+    private List<Expense> expenses = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Role role;
