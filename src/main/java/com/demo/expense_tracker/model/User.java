@@ -41,13 +41,13 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
-
     @OneToMany(mappedBy="user")
     private List<Reminder> reminders = new ArrayList<>();
-
     @OneToMany(mappedBy="user")
     private List<Expense> expenses = new ArrayList<>();
-
+    @OneToMany(mappedBy="user")
+    private List<Income> incomes = new ArrayList<>();
+    
     @Enumerated(EnumType.STRING)
     private Role role;
 

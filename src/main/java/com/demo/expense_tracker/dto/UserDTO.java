@@ -5,7 +5,7 @@
 
 package com.demo.expense_tracker.dto;
 
-import java.io.Serializable;
+import com.demo.expense_tracker.model.Role;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +18,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class IncomeDTO implements Serializable {
+public class UserDTO {
     Long id;
-    String description;
-    double amount;
-    Long income_group_id;
-    Long user_id;
+    String email;
+    String username;
+    String password;
+    Role role;
 }

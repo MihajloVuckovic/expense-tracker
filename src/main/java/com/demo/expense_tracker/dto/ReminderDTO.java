@@ -28,3 +28,4 @@ public class ReminderDTO implements Serializable{
     ReminderType type;
     Long user_id;
 }
+
