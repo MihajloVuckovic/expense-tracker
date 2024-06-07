@@ -5,13 +5,12 @@
 
 package com.demo.expense_tracker.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.demo.expense_tracker.repositories.GenericRepository;
 
@@ -28,11 +27,9 @@ public abstract class GenericServiceImpl<T,DTO,ID> implements GenericService<T,D
         mapper = new ModelMapper();
     }
     @Override
-    public Iterable<DTO> findAll() {
-        List<T> entities = genericRepository.findAll(Sort.by("id"));
-        return entities.stream()
-                .map(entity -> mapper.map(entity, getTypeOfDTO()))
-                .collect(Collectors.toList());
+    public Page<DTO> findAll(Pageable pageable) {
+        Page<T> entities = genericRepository.findAll(pageable);
+        return entities.map(entity -> mapper.map(entity, getTypeOfDTO()));
     }
     @Override
     public DTO findById(ID id) {
