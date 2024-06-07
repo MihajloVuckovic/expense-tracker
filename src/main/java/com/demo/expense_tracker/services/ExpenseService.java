@@ -30,7 +30,7 @@ public class ExpenseService extends GenericServiceImpl<Expense, ExpenseDTO, Long
     private final TokenUtils tokenUtils;
 
     private final ModelMapper mapper;
-
+    @Autowired
     private ExpenseRepository expenseRepository;
 
     @Autowired
