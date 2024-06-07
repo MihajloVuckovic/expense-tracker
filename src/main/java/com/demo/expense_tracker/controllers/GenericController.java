@@ -5,6 +5,8 @@
 
 package com.demo.expense_tracker.controllers;
 
+import java.util.Map;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +38,8 @@ public class GenericController<T,DTO, ID> {
                             @RequestParam(defaultValue="0") int page, 
                             @RequestParam(defaultValue="10") int size,
                             @RequestParam(defaultValue="id") String sortBy,
-                            @RequestParam(defaultValue="asc") String sortDir){
+                            @RequestParam(defaultValue="asc") String sortDir,
+                            @RequestParam(required=false) Map<String, String> allParams){
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
         return service.findAll(pageable);

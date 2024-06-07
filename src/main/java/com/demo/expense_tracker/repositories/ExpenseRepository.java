@@ -27,4 +27,11 @@ public interface ExpenseRepository extends GenericRepository<Expense, ExpenseDTO
     public List<Expense> findTop5ByUser_idOrderByExpenseDateDesc(Long user_id);
     public Page<Expense> findByUser_id(Long user_id, Pageable pageable);
     public List<Expense> findByUser_id(Long user_id);
+    Page<Expense> findByUser_idAndAmount(Long user_id, Double amount, Pageable pageable);
+    Page<Expense> findByUser_idAndDescriptionContaining(Long user_id, String description, Pageable pageable);
+    Page<Expense> findByUser_idAndExpenseDate(Long user_id, LocalDate date, Pageable pageable);
+    Page<Expense> findByUser_idAndAmountAndDescriptionContaining(Long user_id, Double amount, String description, Pageable pageable);
+    Page<Expense> findByUser_idAndAmountAndExpenseDate(Long user_id, Double amount, LocalDate date, Pageable pageable);
+    Page<Expense> findByUser_idAndExpenseDateAndDescriptionContaining(Long user_id, LocalDate date, String description, Pageable pageable);
+    Page<Expense> findByUser_idAndExpenseDateAndDescriptionContainingAndAmount(Long user_id, LocalDate date, String description, Double amount, Pageable pageable);
 }

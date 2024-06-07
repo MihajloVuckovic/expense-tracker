@@ -5,6 +5,7 @@
 
 package com.demo.expense_tracker.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -84,5 +85,47 @@ public class ExpenseService extends GenericServiceImpl<Expense, ExpenseDTO, Long
         List<Expense> incomes = expenseRepository.findByUser_id(user_id);
         return incomes.stream().map(income -> mapper.map(income, getTypeOfDTO()))
                         .collect(Collectors.toList());
+    }
+
+    public Page<ExpenseDTO> filterAmount(Pageable pageable, Double amount){
+        Long user_id = tokenUtils.getUserIdFromToken();
+        Page<Expense> incomesAmount = expenseRepository.findByUser_idAndAmount(user_id, amount, pageable);
+        return incomesAmount.map(income -> mapper.map(income, getTypeOfDTO()));
+    }
+
+    public Page<ExpenseDTO> filterDescription(Pageable pageable, String description){
+        Long user_id = tokenUtils.getUserIdFromToken();
+        Page<Expense> incomesDescription = expenseRepository.findByUser_idAndDescriptionContaining(user_id, description, pageable);
+        return incomesDescription.map(income -> mapper.map(income, getTypeOfDTO()));
+    }
+
+    public Page<ExpenseDTO> filterDate(Pageable pageable, LocalDate date){
+        Long user_id = tokenUtils.getUserIdFromToken();
+        Page<Expense> incomesDate = expenseRepository.findByUser_idAndExpenseDate(user_id, date, pageable);
+        return incomesDate.map(income -> mapper.map(income, getTypeOfDTO()));
+    }
+
+    public Page<ExpenseDTO> filterAmountAndDescription(Pageable pageable, Double amount, String description){
+        Long user_id = tokenUtils.getUserIdFromToken();
+        Page<Expense> incomesDate = expenseRepository.findByUser_idAndAmountAndDescriptionContaining(user_id, amount, description, pageable);
+        return incomesDate.map(income -> mapper.map(income, getTypeOfDTO()));
+    }
+
+    public Page<ExpenseDTO> filterAmountAndDate(Pageable pageable, Double amount, LocalDate date){
+        Long user_id = tokenUtils.getUserIdFromToken();
+        Page<Expense> incomesDate = expenseRepository.findByUser_idAndAmountAndExpenseDate(user_id, amount, date, pageable);
+        return incomesDate.map(income -> mapper.map(income, getTypeOfDTO()));
+    }
+
+    public Page<ExpenseDTO> filterDateAndDescription(Pageable pageable, LocalDate date, String description){
+        Long user_id = tokenUtils.getUserIdFromToken();
+        Page<Expense> incomesDate = expenseRepository.findByUser_idAndExpenseDateAndDescriptionContaining(user_id, date, description, pageable);
+        return incomesDate.map(income -> mapper.map(income, getTypeOfDTO()));
+    }
+
+    public Page<ExpenseDTO> filterAmountAndDescriptionAndIncomeDate(Pageable pageable, Double amount, String description, LocalDate date){
+        Long user_id = tokenUtils.getUserIdFromToken();
+        Page<Expense> incomesDate = expenseRepository.findByUser_idAndExpenseDateAndDescriptionContainingAndAmount(user_id, date, description, amount, pageable);
+        return incomesDate.map(income -> mapper.map(income, getTypeOfDTO()));
     }
 }

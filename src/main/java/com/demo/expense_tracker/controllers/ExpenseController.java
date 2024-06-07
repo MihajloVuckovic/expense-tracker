@@ -7,13 +7,21 @@ package com.demo.expense_tracker.controllers;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -67,6 +75,50 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
         );
 
         return new ResponseEntity<>("Email sent to " + recipientEmail, HttpStatus.OK);
+    }
+
+    @Override
+    public Page<ExpenseDTO> findAll(@RequestParam(defaultValue="0") int page, 
+                                    @RequestParam(defaultValue="10") int size,
+                                    @RequestParam(defaultValue="id") String sortBy,
+                                    @RequestParam(defaultValue="asc") String sortDir,
+                                    @RequestParam(required=false) Map<String, String> allParams) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Map<String,Object> filterParams = new HashMap<>();
+        allParams.forEach((key, value)->{
+            if (!key.equals("page") && !key.equals("size") && !key.equals("sortBy") && !key.equals("sortDir")) {
+                filterParams.put(key, value);
+            }
+        });
+        if(filterParams.containsKey("amount")){
+            Double amountValue = Double.parseDouble(filterParams.get("amount").toString());
+            return expenseService.filterAmount(pageable, amountValue);
+        }else if(filterParams.containsKey("description")){
+            String description = filterParams.get("description").toString();
+            return expenseService.filterDescription(pageable, description);
+        }else if(filterParams.containsKey("date")){
+            LocalDate date = LocalDate.parse(filterParams.get("date").toString());
+            return expenseService.filterDate(pageable, date);
+        }else if(filterParams.containsKey("amount") && filterParams.containsKey("description")){
+            Double amountValue = Double.parseDouble(filterParams.get("amount").toString());
+            String description = filterParams.get("description").toString();
+            return expenseService.filterAmountAndDescription(pageable, amountValue, description);
+        }else if(filterParams.containsKey("amount")&& filterParams.containsKey("date")){
+            Double amountValue = Double.parseDouble(filterParams.get("amount").toString());
+            LocalDate date = LocalDate.parse(filterParams.get("date").toString());
+            return expenseService.filterAmountAndDate(pageable, amountValue, date);
+        }else if(filterParams.containsKey("date") && filterParams.containsKey("description")){
+            LocalDate date = LocalDate.parse(filterParams.get("date").toString());
+            String description = filterParams.get("description").toString();
+            return expenseService.filterDateAndDescription(pageable, date, description);
+        }else if(filterParams.containsKey("amount")&& filterParams.containsKey("date") && filterParams.containsKey("description")){
+            Double amountValue = Double.parseDouble(filterParams.get("amount").toString());
+            LocalDate date = LocalDate.parse(filterParams.get("date").toString());
+            String description = filterParams.get("description").toString();
+            return expenseService.filterAmountAndDescriptionAndIncomeDate(pageable, amountValue, description, date);
+        }
+        return expenseService.findAll(pageable);
     }
 
     
