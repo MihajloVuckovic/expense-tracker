@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,8 +32,6 @@ import com.demo.expense_tracker.pdf_generator.EmailService;
 import com.demo.expense_tracker.pdf_generator.PDFGenerator;
 import com.demo.expense_tracker.services.IncomeService;
 import com.demo.expense_tracker.utils.TokenUtils;
-
-import jdk.jfr.Description;
 
 /**
  *
@@ -53,6 +52,7 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
     }
 
     @GetMapping(value = "/export/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
     public  @ResponseBody byte[] exportToPdf() throws IOException{
         Iterable<IncomeDTO> incomes = incomeService.findAll();
         
@@ -63,6 +63,7 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
     }
 
     @GetMapping("/export/email")
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
     public ResponseEntity<String> exportToEmail() {
         Iterable<IncomeDTO> incomes = incomeService.findAll();
 
@@ -81,6 +82,7 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
     }
 
     @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
     public Page<IncomeDTO> findAll(@RequestParam(defaultValue="0") int page, 
                                     @RequestParam(defaultValue="10") int size,
                                     @RequestParam(defaultValue="id") String sortBy,
@@ -122,6 +124,30 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
             return incomeService.filterAmountAndDescriptionAndIncomeDate(pageable, amountValue, description, date);
         }
         return incomeService.findAll(pageable);
+    }
+
+    @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    public ResponseEntity<String> delete(Long id) {
+        return super.delete(id);
+    }
+
+    @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    public ResponseEntity<String> create(Income t) {
+        return super.create(t);
+    }
+
+    @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    public ResponseEntity<IncomeDTO> update(IncomeDTO dto, Long id) {
+        return super.update(dto, id);
+    }
+
+    @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    public ResponseEntity<IncomeDTO> findById(Long id) {
+        return super.findById(id);
     }
 
     

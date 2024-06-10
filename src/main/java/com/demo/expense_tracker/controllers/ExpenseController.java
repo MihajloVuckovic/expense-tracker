@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,6 +52,7 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
     }
 
     @GetMapping(value="/export/pdf", produces=MediaType.APPLICATION_PDF_VALUE)
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
     public @ResponseBody byte[] exportToPdf() throws IOException{
         Iterable<ExpenseDTO> expenses = expenseService.findAll();
         ByteArrayOutputStream pdfOutputStream = PDFGenerator.generatePdf(expenses, ExpenseDTO.class);
@@ -60,6 +62,7 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
     }
 
     @GetMapping("/export/email")
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
     public ResponseEntity<String> exportToEmail() {
         Iterable<ExpenseDTO> expenses = expenseService.findAll();
 
@@ -78,6 +81,7 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
     }
 
     @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
     public Page<ExpenseDTO> findAll(@RequestParam(defaultValue="0") int page, 
                                     @RequestParam(defaultValue="10") int size,
                                     @RequestParam(defaultValue="id") String sortBy,
@@ -119,6 +123,30 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
             return expenseService.filterAmountAndDescriptionAndIncomeDate(pageable, amountValue, description, date);
         }
         return expenseService.findAll(pageable);
+    }
+
+    @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    public ResponseEntity<String> delete(Long id) {
+        return super.delete(id);
+    }
+
+    @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    public ResponseEntity<String> create(Expense t) {
+        return super.create(t);
+    }
+
+    @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    public ResponseEntity<ExpenseDTO> update(ExpenseDTO dto, Long id) {
+        return super.update(dto, id);
+    }
+
+    @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    public ResponseEntity<ExpenseDTO> findById(Long id) {
+        return super.findById(id);
     }
 
     

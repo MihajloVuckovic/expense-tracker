@@ -5,6 +5,7 @@
 
 package com.demo.expense_tracker.services;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class DashboardService {
         return activeReminderDTO;
     }
 
-    public Double getTotalAmount() {
+    public BigDecimal getTotalAmount() {
         Long user_id = tokenUtils.getUserIdFromToken();
         Double totalExpenses = expenseRepository.findByUser_id(user_id)
                 .stream()
@@ -66,8 +67,8 @@ public class DashboardService {
                 .stream()
                 .mapToDouble(Income::getAmount)
                 .sum();
-        
-        return totalIncome - totalExpenses;
+        BigDecimal result = BigDecimal.valueOf(totalIncome - totalExpenses);
+        return result;
     }
 
     public List<ExpenseDTO> getLast5Expenses() {

@@ -50,6 +50,7 @@ public class IncomeService extends GenericServiceImpl<Income, IncomeDTO, Long> {
     public Income save(Income t) {
         Long user_id = tokenUtils.getUserIdFromToken();
         t.setUser_id(user_id);
+        t.setIncomeDate(LocalDate.now());
         return super.save(t);
     }
 

@@ -49,6 +49,7 @@ public class ExpenseService extends GenericServiceImpl<Expense, ExpenseDTO, Long
     public Expense save(Expense t) {
         Long user_id = tokenUtils.getUserIdFromToken();
         t.setUser_id(user_id);
+        t.setExpenseDate(LocalDate.now());
         return super.save(t);
     }
 

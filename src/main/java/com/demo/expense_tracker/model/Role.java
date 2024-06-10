@@ -16,8 +16,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
  * @author mihajlo.vuckovic
  */
 public enum Role {
-    STANDARD, 
-    PREMIUM;
+    ROLE_STANDARD, 
+    ROLE_PREMIUM,
+    ROLE_ADMIN;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(this.name()));
