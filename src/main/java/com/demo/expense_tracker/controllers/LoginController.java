@@ -6,6 +6,7 @@
 package com.demo.expense_tracker.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -33,6 +34,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/api/login")
 public class LoginController {
+    @Value("${token.expiration}")
+    private Long expiration;
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -54,7 +57,7 @@ public class LoginController {
             .httpOnly(true)
             .secure(false)
             .path("/")
-            .maxAge(1800)
+            .maxAge(expiration)
             .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         return new ResponseEntity<>("Successful login", HttpStatus.OK);

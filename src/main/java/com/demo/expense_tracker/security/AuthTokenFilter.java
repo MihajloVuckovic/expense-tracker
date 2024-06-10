@@ -39,20 +39,9 @@ public class AuthTokenFilter extends UsernamePasswordAuthenticationFilter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		String header = httpRequest.getHeader("Authorization");
 		String token = null;
 		String username = null;
 
-		/*if (header != null && header.startsWith("Bearer ")) {
-			token = header.substring(7);
-			try {
-				username = tokenUtils.getUsername(token);
-			} catch (Exception e) {
-				System.out.println("Invalid token");
-			}
-		} else {
-			System.out.println("Bearer String not found in token");
-		}*/
 		if(httpRequest.getCookies() != null){
             for(Cookie cookie: httpRequest.getCookies()){
                 if(cookie.getName().equals("accessToken")){
