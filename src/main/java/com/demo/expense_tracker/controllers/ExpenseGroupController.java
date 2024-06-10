@@ -38,7 +38,7 @@ public class ExpenseGroupController extends GenericController<ExpenseGroup, Expe
 
     @Override
     @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
-    public ResponseEntity<String> create(ExpenseGroup t) {
+    public ResponseEntity<ExpenseGroup> create(ExpenseGroup t) {
         return super.create(t);
     }
 

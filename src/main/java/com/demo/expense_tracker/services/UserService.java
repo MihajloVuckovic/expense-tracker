@@ -44,6 +44,11 @@ public class UserService extends GenericServiceImpl<User, UserDTO, Long> {
         return UserDTO.class;
     }
 
+    @Override 
+    protected String entityName(){
+        return User.class.getSimpleName();
+    }
+
     @Override
     public User save(User t) {
         t.setPassword(passwordEncoder.encode(t.getPassword()));

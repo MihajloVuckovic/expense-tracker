@@ -45,6 +45,10 @@ public class IncomeService extends GenericServiceImpl<Income, IncomeDTO, Long> {
     protected Class<IncomeDTO> getTypeOfDTO() {
         return IncomeDTO.class;
     }
+    @Override 
+    protected String entityName(){
+        return Income.class.getSimpleName();
+    }
 
     @Override
     public Income save(Income t) {

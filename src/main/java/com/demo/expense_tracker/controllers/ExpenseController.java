@@ -133,7 +133,7 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
 
     @Override
     @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
-    public ResponseEntity<String> create(Expense t) {
+    public ResponseEntity<Expense> create(Expense t) {
         return super.create(t);
     }
 

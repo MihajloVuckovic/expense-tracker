@@ -134,7 +134,7 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
 
     @Override
     @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
-    public ResponseEntity<String> create(Income t) {
+    public ResponseEntity<Income> create(Income t) {
         return super.create(t);
     }
 

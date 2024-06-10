@@ -37,7 +37,7 @@ public class UserController extends GenericController<User, UserDTO, Long> {
     }
 
     @Override
-    public ResponseEntity<String> create(User t) {
+    public ResponseEntity<User> create(User t) {
         return super.create(t);
     }
 

@@ -27,4 +27,9 @@ public class IncomeGroupService extends GenericServiceImpl<IncomeGroup, IncomeGr
         return IncomeGroupDTO.class;
     }
 
+    @Override 
+    protected String entityName(){
+        return IncomeGroup.class.getSimpleName();
+    }
+
 }

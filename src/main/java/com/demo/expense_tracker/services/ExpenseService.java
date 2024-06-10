@@ -46,6 +46,11 @@ public class ExpenseService extends GenericServiceImpl<Expense, ExpenseDTO, Long
         return ExpenseDTO.class;
     }
 
+    @Override 
+    protected String entityName(){
+        return Expense.class.getSimpleName();
+    }
+
     @Override
     public Expense save(Expense t) {
         Long user_id = tokenUtils.getUserIdFromToken();

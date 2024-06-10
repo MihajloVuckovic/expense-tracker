@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.demo.expense_tracker.exceptions.ResourceNotFoundException;
 import com.demo.expense_tracker.repositories.GenericRepository;
 
 /**
@@ -22,6 +23,7 @@ public abstract class GenericServiceImpl<T,DTO,ID> implements GenericService<T,D
     private final GenericRepository<T,DTO,ID> genericRepository;
     private final ModelMapper mapper;
     protected abstract Class<DTO> getTypeOfDTO();
+    protected abstract String entityName();
     public GenericServiceImpl(GenericRepository<T,DTO,ID> genericRepository){
         this.genericRepository=genericRepository;
         mapper = new ModelMapper();
@@ -34,7 +36,7 @@ public abstract class GenericServiceImpl<T,DTO,ID> implements GenericService<T,D
     @Override
     public DTO findById(ID id) {
         Optional<T> t = genericRepository.findById(id);
-        return t.map(value -> mapper.map(value, getTypeOfDTO())).orElse(null);
+        return t.map(value -> mapper.map(value, getTypeOfDTO())).orElseThrow(() -> new ResourceNotFoundException(entityName() + " with id " + id + " not found"));
     }
     @Override
     public boolean existsById(ID id) {
@@ -47,7 +49,7 @@ public abstract class GenericServiceImpl<T,DTO,ID> implements GenericService<T,D
     @Override
     public void update(final DTO dto, final ID id) {
         final T t = genericRepository.findById(id)
-                .orElseThrow(null);
+                .orElseThrow(() -> new ResourceNotFoundException(entityName() + " with id " + id + " not found"));
         mapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
         mapper.map(dto, t);
         genericRepository.save(t);

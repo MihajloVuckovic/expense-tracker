@@ -38,7 +38,7 @@ public class ReminderController extends GenericController<Reminder, ReminderDTO,
 
     @Override
     @Secured("ROLE_PREMIUM")
-    public ResponseEntity<String> create(Reminder t) {
+    public ResponseEntity<Reminder> create(Reminder t) {
         return super.create(t);
     }
 

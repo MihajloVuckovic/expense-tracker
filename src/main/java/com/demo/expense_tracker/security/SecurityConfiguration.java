@@ -6,6 +6,7 @@
 package com.demo.expense_tracker.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +29,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled=true, prePostEnabled=true)
 public class SecurityConfiguration {
+
+	@Value("${token.secret}")
+	private String secret;
+
     @Autowired
 	UserDetailsService userDetailsService;
 	
@@ -59,6 +64,8 @@ public class SecurityConfiguration {
                 .sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(authTokenFilterBean(conf), UsernamePasswordAuthenticationFilter.class)
+				.rememberMe(rememberMe -> rememberMe.key(secret).tokenValiditySeconds(86400).rememberMeParameter("remember-me"))
+				.logout((logout) -> logout.logoutUrl("/api/logout").logoutSuccessUrl("/api/login"))
                 .build();
 	}
 }

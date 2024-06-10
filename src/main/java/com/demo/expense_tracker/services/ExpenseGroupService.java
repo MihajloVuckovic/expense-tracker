@@ -28,6 +28,10 @@ public class ExpenseGroupService extends GenericServiceImpl<ExpenseGroup, Expens
         return ExpenseGroupDTO.class;
     }
 
+    @Override 
+    protected String entityName(){
+        return ExpenseGroup.class.getSimpleName();
+    }
 
 
 }

@@ -57,6 +57,11 @@ public class ReminderService extends GenericServiceImpl<Reminder, ReminderDTO, L
         return ReminderDTO.class;
     }
 
+    @Override 
+    protected String entityName(){
+        return Reminder.class.getSimpleName();
+    }
+
     @Scheduled(cron="0 0 12 * * ?")
     public void sendReminders(){
         LocalDate now = LocalDate.now();

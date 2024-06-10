@@ -48,32 +48,21 @@ public class GenericController<T,DTO, ID> {
     @GetMapping("/{id}")
     public ResponseEntity<DTO> findById(@PathVariable ID id) {
         DTO dto = service.findById(id);
-        if (dto != null) {
-            return new ResponseEntity<>(dto, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
     @PutMapping("/{id}")
     public ResponseEntity<DTO> update(@RequestBody final DTO dto, @PathVariable("id") final ID id) {
-        if (service.existsById(id)) {
             service.update(dto, id);
             return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
     }
     @PostMapping("")
-    public ResponseEntity<String> create(@RequestBody T t){
+    public ResponseEntity<T> create(@RequestBody T t){
         service.save(t);
-        return new ResponseEntity<>("The entity has been created!",HttpStatus.CREATED);
+        return new ResponseEntity<>(t,HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable ID id){
-        if(!service.existsById(id)){
-            return new ResponseEntity<>("Entity was not found!",HttpStatus.NOT_FOUND);
-        }
         service.remove(id);
-        return new ResponseEntity<>("Entity successfuly removed!",HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
