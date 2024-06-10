@@ -35,6 +35,9 @@ public class SecurityConfiguration {
 
     @Autowired
 	UserDetailsService userDetailsService;
+
+	@Autowired
+    private CustomLogoutSuccessHandler logoutSuccessHandler;
 	
 	@Bean
 	AuthenticationManager authenticationManagerBean(AuthenticationConfiguration conf) throws Exception {
@@ -65,7 +68,7 @@ public class SecurityConfiguration {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(authTokenFilterBean(conf), UsernamePasswordAuthenticationFilter.class)
 				.rememberMe(rememberMe -> rememberMe.key(secret).tokenValiditySeconds(86400).rememberMeParameter("remember-me"))
-				.logout((logout) -> logout.logoutUrl("/api/logout").logoutSuccessUrl("/api/login"))
+				.logout((logout) -> logout.logoutUrl("/api/logout").logoutSuccessUrl("/api/login").logoutSuccessHandler(logoutSuccessHandler))
                 .build();
 	}
 }
