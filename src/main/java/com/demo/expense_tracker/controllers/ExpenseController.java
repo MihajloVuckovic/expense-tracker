@@ -7,7 +7,6 @@ package com.demo.expense_tracker.controllers;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.expense_tracker.dto.ExpenseDTO;
 import com.demo.expense_tracker.model.Expense;
-import com.demo.expense_tracker.model.QExpense;
 import com.demo.expense_tracker.pdf_generator.EmailService;
 import com.demo.expense_tracker.pdf_generator.PDFGenerator;
 import com.demo.expense_tracker.services.ExpenseService;
 import com.demo.expense_tracker.utils.TokenUtils;
-import com.querydsl.core.types.dsl.BooleanExpression;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  *
@@ -42,7 +37,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @RequestMapping("/api/dashboard/expenses")
-@Slf4j
 public class ExpenseController extends GenericController<Expense, ExpenseDTO, Long> {
     private final TokenUtils tokenUtils;
     @Autowired
