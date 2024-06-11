@@ -32,5 +32,5 @@ public class ExpenseGroupService extends GenericServiceImpl<ExpenseGroup, Expens
         return ExpenseGroup.class.getSimpleName();
     }
 
-
+    
 }
