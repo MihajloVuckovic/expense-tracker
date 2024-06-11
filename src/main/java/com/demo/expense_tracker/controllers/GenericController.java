@@ -42,7 +42,7 @@ public class GenericController<T,DTO, ID> {
                             @RequestParam(required=false) Map<String, String> allParams){
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        return service.findAll(pageable);
+        return service.findAll(pageable, allParams);
     }
 
     @GetMapping("/{id}")

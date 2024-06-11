@@ -6,6 +6,7 @@
 package com.demo.expense_tracker.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 
 /**
@@ -13,6 +14,6 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @author mihajlo.vuckovic
  */
 @NoRepositoryBean
-public interface GenericRepository<T,DTO,ID> extends JpaRepository<T,ID> {
+public interface GenericRepository<T,DTO,ID> extends JpaRepository<T,ID>, QuerydslPredicateExecutor<T> {
 }
 
