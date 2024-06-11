@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.demo.expense_tracker.dto.IncomeDTO;
 import com.demo.expense_tracker.model.Income;
+import com.demo.expense_tracker.model.IncomeGroup;
 
 /**
  *
@@ -33,4 +34,6 @@ public interface IncomeRepository extends GenericRepository<Income, IncomeDTO, L
     Page<Income> findByUser_idAndAmountAndIncomeDate(Long user_id, Double amount, LocalDate date, Pageable pageable);
     Page<Income> findByUser_idAndIncomeDateAndDescriptionContaining(Long user_id, LocalDate date, String description, Pageable pageable);
     Page<Income> findByUser_idAndIncomeDateAndDescriptionContainingAndAmount(Long user_id, LocalDate date, String description, Double amount, Pageable pageable);
+
+    List<Income> findTop5ByIncomeGroupAndUser_idOrderByIncomeDateDesc(IncomeGroup incomeGroup, Long user_id);
 }

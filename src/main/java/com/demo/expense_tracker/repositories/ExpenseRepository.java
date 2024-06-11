@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.demo.expense_tracker.dto.ExpenseDTO;
 import com.demo.expense_tracker.model.Expense;
+import com.demo.expense_tracker.model.ExpenseGroup;
 
 /**
  *
@@ -34,4 +35,6 @@ public interface ExpenseRepository extends GenericRepository<Expense, ExpenseDTO
     Page<Expense> findByUser_idAndAmountAndExpenseDate(Long user_id, Double amount, LocalDate date, Pageable pageable);
     Page<Expense> findByUser_idAndExpenseDateAndDescriptionContaining(Long user_id, LocalDate date, String description, Pageable pageable);
     Page<Expense> findByUser_idAndExpenseDateAndDescriptionContainingAndAmount(Long user_id, LocalDate date, String description, Double amount, Pageable pageable);
+
+    List<Expense> findTop5ByExpenseGroupAndUser_idOrderByExpenseDateDesc(ExpenseGroup expenseGroup, Long user_id);
 }
