@@ -7,7 +7,6 @@ package com.demo.expense_tracker.controllers;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -25,7 +24,7 @@ import com.demo.expense_tracker.services.ExpenseGroupService;
 @RestController
 @RequestMapping("/api/dashboard/expense-groups")
 public class ExpenseGroupController extends GenericController<ExpenseGroup, ExpenseGroupDTO, Long>{
-    @Autowired
+    
     public ExpenseGroupController(ExpenseGroupService expenseGroupService){
         super(expenseGroupService);
     }

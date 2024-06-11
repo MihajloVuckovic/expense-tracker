@@ -7,7 +7,6 @@ package com.demo.expense_tracker.controllers;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -25,7 +24,7 @@ import com.demo.expense_tracker.services.UserService;
 @RestController
 @RequestMapping("/api/user")
 public class UserController extends GenericController<User, UserDTO, Long> {
-    @Autowired
+    
     public UserController(UserService userService){
         super(userService);
     }

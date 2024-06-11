@@ -45,7 +45,7 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
     private EmailService emailService;
     @Autowired
     private IncomeService incomeService;
-    @Autowired
+
     public IncomeController(IncomeService incomeService){
         super(incomeService);
         this.tokenUtils= new TokenUtils();
@@ -97,7 +97,7 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
             }
         });
         if(filterParams.containsKey("amount")){
-            Double amountValue = Double.parseDouble(filterParams.get("amount").toString());
+            Double amountValue = Double.valueOf(filterParams.get("amount").toString());
             return incomeService.filterAmount(pageable, amountValue);
         }else if(filterParams.containsKey("description")){
             String description = filterParams.get("description").toString();
@@ -106,11 +106,11 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
             LocalDate date = LocalDate.parse(filterParams.get("date").toString());
             return incomeService.filterDate(pageable, date);
         }else if(filterParams.containsKey("amount") && filterParams.containsKey("description")){
-            Double amountValue = Double.parseDouble(filterParams.get("amount").toString());
+            Double amountValue = Double.valueOf(filterParams.get("amount").toString());
             String description = filterParams.get("description").toString();
             return incomeService.filterAmountAndDescription(pageable, amountValue, description);
         }else if(filterParams.containsKey("amount")&& filterParams.containsKey("date")){
-            Double amountValue = Double.parseDouble(filterParams.get("amount").toString());
+            Double amountValue = Double.valueOf(filterParams.get("amount").toString());
             LocalDate date = LocalDate.parse(filterParams.get("date").toString());
             return incomeService.filterAmountAndDate(pageable, amountValue, date);
         }else if(filterParams.containsKey("date") && filterParams.containsKey("description")){
@@ -118,7 +118,7 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
             String description = filterParams.get("description").toString();
             return incomeService.filterDateAndDescription(pageable, date, description);
         }else if(filterParams.containsKey("amount")&& filterParams.containsKey("date") && filterParams.containsKey("description")){
-            Double amountValue = Double.parseDouble(filterParams.get("amount").toString());
+            Double amountValue = Double.valueOf(filterParams.get("amount").toString());
             LocalDate date = LocalDate.parse(filterParams.get("date").toString());
             String description = filterParams.get("description").toString();
             return incomeService.filterAmountAndDescriptionAndIncomeDate(pageable, amountValue, description, date);

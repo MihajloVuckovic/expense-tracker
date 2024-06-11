@@ -35,7 +35,7 @@ public class ExpenseService extends GenericServiceImpl<Expense, ExpenseDTO, Long
     @Autowired
     private ExpenseRepository expenseRepository;
 
-    @Autowired
+    
     public ExpenseService(ExpenseRepository expenseRepository){
         super(expenseRepository);
         this.tokenUtils= new TokenUtils();

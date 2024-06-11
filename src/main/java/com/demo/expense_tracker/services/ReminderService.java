@@ -46,7 +46,7 @@ public class ReminderService extends GenericServiceImpl<Reminder, ReminderDTO, L
     @Autowired
     private ExpenseRepository expenseRepository;
 
-    @Autowired
+    
     public ReminderService(ReminderRepository reminderRepository){
         super(reminderRepository);
         this.tokenUtils= new TokenUtils();

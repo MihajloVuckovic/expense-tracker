@@ -10,8 +10,6 @@ package com.demo.expense_tracker.exceptions;
  * @author mihajlo.vuckovic
  */
 public class ResourceNotFoundException extends RuntimeException {
-    private static final Long serialVersionUID = 1L;
-
     public ResourceNotFoundException(String msg){
         super(msg);
     }

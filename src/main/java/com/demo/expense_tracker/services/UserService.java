@@ -32,7 +32,6 @@ public class UserService extends GenericServiceImpl<User, UserDTO, Long> {
 
     private final TokenUtils tokenUtils;
     
-    @Autowired
     public UserService(UserRepo userRepo){
         super(userRepo);
         this.mapper= new ModelMapper();
@@ -60,7 +59,7 @@ public class UserService extends GenericServiceImpl<User, UserDTO, Long> {
         final User updatedUser = userRepo.findById(id)
                 .orElseThrow(null);
         Long user_id = tokenUtils.getUserIdFromToken();
-        if(user_id != id){
+        if(!user_id.equals(id)){
             throw new RuntimeException("You cannot change another user!");
         }
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));

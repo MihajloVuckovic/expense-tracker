@@ -45,7 +45,7 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
     private EmailService emailService;
     @Autowired
     private ExpenseService expenseService;
-    @Autowired
+    
     public ExpenseController(ExpenseService expenseService){
         super(expenseService);
         this.tokenUtils = new TokenUtils();
@@ -96,7 +96,7 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
             }
         });
         if(filterParams.containsKey("amount")){
-            Double amountValue = Double.parseDouble(filterParams.get("amount").toString());
+            Double amountValue = Double.valueOf(filterParams.get("amount").toString());
             return expenseService.filterAmount(pageable, amountValue);
         }else if(filterParams.containsKey("description")){
             String description = filterParams.get("description").toString();
@@ -105,11 +105,11 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
             LocalDate date = LocalDate.parse(filterParams.get("date").toString());
             return expenseService.filterDate(pageable, date);
         }else if(filterParams.containsKey("amount") && filterParams.containsKey("description")){
-            Double amountValue = Double.parseDouble(filterParams.get("amount").toString());
+            Double amountValue = Double.valueOf(filterParams.get("amount").toString());
             String description = filterParams.get("description").toString();
             return expenseService.filterAmountAndDescription(pageable, amountValue, description);
         }else if(filterParams.containsKey("amount")&& filterParams.containsKey("date")){
-            Double amountValue = Double.parseDouble(filterParams.get("amount").toString());
+            Double amountValue = Double.valueOf(filterParams.get("amount").toString());
             LocalDate date = LocalDate.parse(filterParams.get("date").toString());
             return expenseService.filterAmountAndDate(pageable, amountValue, date);
         }else if(filterParams.containsKey("date") && filterParams.containsKey("description")){
@@ -117,7 +117,7 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
             String description = filterParams.get("description").toString();
             return expenseService.filterDateAndDescription(pageable, date, description);
         }else if(filterParams.containsKey("amount")&& filterParams.containsKey("date") && filterParams.containsKey("description")){
-            Double amountValue = Double.parseDouble(filterParams.get("amount").toString());
+            Double amountValue = Double.valueOf(filterParams.get("amount").toString());
             LocalDate date = LocalDate.parse(filterParams.get("date").toString());
             String description = filterParams.get("description").toString();
             return expenseService.filterAmountAndDescriptionAndIncomeDate(pageable, amountValue, description, date);

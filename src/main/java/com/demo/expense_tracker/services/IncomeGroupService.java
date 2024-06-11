@@ -5,7 +5,6 @@
 
 package com.demo.expense_tracker.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.expense_tracker.dto.IncomeGroupDTO;
@@ -18,7 +17,7 @@ import com.demo.expense_tracker.repositories.IncomeGroupRepository;
  */
 @Service
 public class IncomeGroupService extends GenericServiceImpl<IncomeGroup, IncomeGroupDTO, Long> {
-    @Autowired
+    
     public IncomeGroupService(IncomeGroupRepository incomeGroupRepository){
         super(incomeGroupRepository);
     }

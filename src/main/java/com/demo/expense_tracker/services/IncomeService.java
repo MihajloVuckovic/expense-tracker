@@ -35,7 +35,7 @@ public class IncomeService extends GenericServiceImpl<Income, IncomeDTO, Long> {
     @Autowired
     private IncomeRepository incomeRepository;
 
-    @Autowired
+    
     public IncomeService(IncomeRepository incomeRepository){
         super(incomeRepository);
         this.tokenUtils= new TokenUtils(); 
