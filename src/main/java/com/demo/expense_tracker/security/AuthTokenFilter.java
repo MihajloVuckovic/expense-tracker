@@ -21,6 +21,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -38,20 +39,23 @@ public class AuthTokenFilter extends UsernamePasswordAuthenticationFilter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		String header = httpRequest.getHeader("Authorization");
 		String token = null;
 		String username = null;
 
-		if (header != null && header.startsWith("Bearer ")) {
-			token = header.substring(7);
-			try {
-				username = tokenUtils.getUsername(token);
-			} catch (Exception e) {
-				System.out.println("Invalid token");
-			}
-		} else {
-			System.out.println("Bearer String not found in token");
-		}
+		if(httpRequest.getCookies() != null){
+            for(Cookie cookie: httpRequest.getCookies()){
+                if(cookie.getName().equals("accessToken")){
+                    token = cookie.getValue();
+                }
+            }
+        }
+
+        if(token == null){
+            chain.doFilter(request, response);
+            return;
+        }
+
+        username = tokenUtils.getUsername(token);
 
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -62,6 +66,7 @@ public class AuthTokenFilter extends UsernamePasswordAuthenticationFilter {
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		}
+
 		chain.doFilter(request, response);
 	}
 }
