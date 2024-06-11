@@ -8,6 +8,7 @@ package com.demo.expense_tracker.repositories;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.demo.expense_tracker.dto.ReminderDTO;
@@ -18,7 +19,7 @@ import com.demo.expense_tracker.model.Reminder;
  * @author mihajlo.vuckovic
  */
 @Repository
-public interface ReminderRepository extends GenericRepository<Reminder, ReminderDTO, Long>{
+public interface ReminderRepository extends GenericRepository<Reminder, ReminderDTO, Long>, QuerydslPredicateExecutor<Reminder>{
     List<Reminder> findByReminderDay(LocalDate date);
     List<Reminder> findByUser_id(Long user_id);
     Reminder findByUser_idAndActive(Long user_id, boolean isActive);
