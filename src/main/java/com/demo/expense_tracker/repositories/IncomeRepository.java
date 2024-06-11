@@ -8,7 +8,6 @@ package com.demo.expense_tracker.repositories;
 
 import java.util.List;
 
-import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.demo.expense_tracker.dto.IncomeDTO;
@@ -20,7 +19,7 @@ import com.demo.expense_tracker.model.IncomeGroup;
  * @author mihajlo.vuckovic
  */
 @Repository
-public interface IncomeRepository extends GenericRepository<Income, IncomeDTO, Long>,QuerydslPredicateExecutor<Income> {
+public interface IncomeRepository extends GenericRepository<Income, IncomeDTO, Long>{
 
     List<Income> findTop5ByUser_idOrderByIncomeDateDesc(Long user_id);
     List<Income> findByUser_id(Long user_id);

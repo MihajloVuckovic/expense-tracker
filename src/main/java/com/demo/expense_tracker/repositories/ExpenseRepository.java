@@ -9,7 +9,6 @@ package com.demo.expense_tracker.repositories;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.demo.expense_tracker.dto.ExpenseDTO;
@@ -22,7 +21,7 @@ import com.demo.expense_tracker.model.ExpenseGroup;
  * @author mihajlo.vuckovic
  */
 @Repository
-public interface ExpenseRepository extends GenericRepository<Expense, ExpenseDTO, Long>, QuerydslPredicateExecutor<Expense>{
+public interface ExpenseRepository extends GenericRepository<Expense, ExpenseDTO, Long>{
     List<Expense> findByExpenseDateBetweenAndUser_Id(LocalDate startDate, LocalDate endDate, Long user_id);  
     List<Expense> findTop5ByUser_idOrderByExpenseDateDesc(Long user_id);
     List<Expense> findByUser_id(Long user_id);
