@@ -21,6 +21,7 @@ import com.demo.expense_tracker.model.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 
@@ -74,7 +75,7 @@ public class TokenUtils {
 		return Jwts.builder()
 				.setClaims(claims)
 				.setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
-				.signWith(getKey())
+				.signWith(getKey(), SignatureAlgorithm.HS256)
 				.compact();
 	}
 	public String getUserEmailFromToken() {

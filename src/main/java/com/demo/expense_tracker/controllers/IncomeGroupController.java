@@ -5,7 +5,11 @@
 
 package com.demo.expense_tracker.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Map;
+
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +24,38 @@ import com.demo.expense_tracker.services.IncomeGroupService;
 @RestController
 @RequestMapping("/api/dashboard/income-groups")
 public class IncomeGroupController extends GenericController<IncomeGroup, IncomeGroupDTO, Long>{
-    @Autowired
+    
     public IncomeGroupController(IncomeGroupService incomeGroupService){
         super(incomeGroupService);
+    }
+
+    @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    public ResponseEntity<String> delete(Long id) {
+        return super.delete(id);
+    }
+
+    @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    public ResponseEntity<IncomeGroup> create(IncomeGroup t) {
+        return super.create(t);
+    }
+
+    @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    public ResponseEntity<IncomeGroupDTO> update(IncomeGroupDTO dto, Long id) {
+        return super.update(dto, id);
+    }
+
+    @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    public ResponseEntity<IncomeGroupDTO> findById(Long id) {
+        return super.findById(id);
+    }
+
+    @Override
+    @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    public Page<IncomeGroupDTO> findAll(int page, int size, String sortBy, String sortDir, Map<String, String> allParams) {
+        return super.findAll(page, size, sortBy, sortDir, allParams);
     }
 }

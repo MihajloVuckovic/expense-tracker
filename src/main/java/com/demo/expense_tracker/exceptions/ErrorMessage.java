@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package com.demo.expense_tracker.dto;
+package com.demo.expense_tracker.exceptions;
 
-import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,9 +19,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class IncomeGroupDTO implements Serializable{
-    Long id;
-    String name;
-    String description;
-    List<IncomeDTO> incomes;
+@AllArgsConstructor
+public class ErrorMessage {
+    private int statusCode;
+    private Date timestamp;
+    private String message;
+    private String description;
 }
