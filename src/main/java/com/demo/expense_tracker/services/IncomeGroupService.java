@@ -6,6 +6,7 @@
 package com.demo.expense_tracker.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class IncomeGroupService extends GenericServiceImpl<IncomeGroup, IncomeGr
     }
 
     @Override
-    public Page<IncomeGroupDTO> findAll(Pageable pageable) {
+    public Page<IncomeGroupDTO> findAll(Pageable pageable, Map<String, String> map) {
         Long user_id = tokenUtils.getUserIdFromToken();
         Page<IncomeGroup> incomeGroups = incomeGroupRepository.findAll(pageable);
         

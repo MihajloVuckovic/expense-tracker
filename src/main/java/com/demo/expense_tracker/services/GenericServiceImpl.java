@@ -5,6 +5,7 @@
 
 package com.demo.expense_tracker.services;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.modelmapper.Conditions;
@@ -29,7 +30,7 @@ public abstract class GenericServiceImpl<T,DTO,ID> implements GenericService<T,D
         mapper = new ModelMapper();
     }
     @Override
-    public Page<DTO> findAll(Pageable pageable) {
+    public Page<DTO> findAll(Pageable pageable, Map<String, String> map) {
         Page<T> entities = genericRepository.findAll(pageable);
         return entities.map(entity -> mapper.map(entity, getTypeOfDTO()));
     }

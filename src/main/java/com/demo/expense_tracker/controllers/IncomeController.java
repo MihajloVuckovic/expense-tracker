@@ -7,8 +7,6 @@ package com.demo.expense_tracker.controllers;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,40 +88,8 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
                                     @RequestParam(required=false) Map<String, String> allParams) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        Map<String,Object> filterParams = new HashMap<>();
-        allParams.forEach((key, value)->{
-            if (!key.equals("page") && !key.equals("size") && !key.equals("sortBy") && !key.equals("sortDir")) {
-                filterParams.put(key, value);
-            }
-        });
-        if(filterParams.containsKey("amount")){
-            Double amountValue = Double.valueOf(filterParams.get("amount").toString());
-            return incomeService.filterAmount(pageable, amountValue);
-        }else if(filterParams.containsKey("description")){
-            String description = filterParams.get("description").toString();
-            return incomeService.filterDescription(pageable, description);
-        }else if(filterParams.containsKey("date")){
-            LocalDate date = LocalDate.parse(filterParams.get("date").toString());
-            return incomeService.filterDate(pageable, date);
-        }else if(filterParams.containsKey("amount") && filterParams.containsKey("description")){
-            Double amountValue = Double.valueOf(filterParams.get("amount").toString());
-            String description = filterParams.get("description").toString();
-            return incomeService.filterAmountAndDescription(pageable, amountValue, description);
-        }else if(filterParams.containsKey("amount")&& filterParams.containsKey("date")){
-            Double amountValue = Double.valueOf(filterParams.get("amount").toString());
-            LocalDate date = LocalDate.parse(filterParams.get("date").toString());
-            return incomeService.filterAmountAndDate(pageable, amountValue, date);
-        }else if(filterParams.containsKey("date") && filterParams.containsKey("description")){
-            LocalDate date = LocalDate.parse(filterParams.get("date").toString());
-            String description = filterParams.get("description").toString();
-            return incomeService.filterDateAndDescription(pageable, date, description);
-        }else if(filterParams.containsKey("amount")&& filterParams.containsKey("date") && filterParams.containsKey("description")){
-            Double amountValue = Double.valueOf(filterParams.get("amount").toString());
-            LocalDate date = LocalDate.parse(filterParams.get("date").toString());
-            String description = filterParams.get("description").toString();
-            return incomeService.filterAmountAndDescriptionAndIncomeDate(pageable, amountValue, description, date);
-        }
-        return incomeService.findAll(pageable);
+        
+        return incomeService.findAll(pageable, allParams);
     }
 
     @Override
