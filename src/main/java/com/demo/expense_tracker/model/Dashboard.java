@@ -5,6 +5,7 @@
 
 package com.demo.expense_tracker.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,6 @@ import lombok.Setter;
 public class Dashboard {
     private List<IncomeDTO> incomes = new ArrayList<>();
     private List<ExpenseDTO> expenses = new ArrayList<>();
-    private Double totalBalance;
+    private BigDecimal totalBalance;
     private ReminderDTO reminder;
 }

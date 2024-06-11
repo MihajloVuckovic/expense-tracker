@@ -5,6 +5,12 @@
 
 package com.demo.expense_tracker.controllers;
 
+import java.util.Map;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.demo.expense_tracker.services.GenericService;
 
@@ -27,39 +34,35 @@ public class GenericController<T,DTO, ID> {
     }
 
     @GetMapping("")
-    public Iterable<DTO> findAll(){
-        return service.findAll();
+    public Page<DTO> findAll(
+                            @RequestParam(defaultValue="0") int page, 
+                            @RequestParam(defaultValue="10") int size,
+                            @RequestParam(defaultValue="id") String sortBy,
+                            @RequestParam(defaultValue="asc") String sortDir,
+                            @RequestParam(required=false) Map<String, String> allParams){
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return service.findAll(pageable);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DTO> findById(@PathVariable ID id) {
         DTO dto = service.findById(id);
-        if (dto != null) {
-            return new ResponseEntity<>(dto, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
     @PutMapping("/{id}")
     public ResponseEntity<DTO> update(@RequestBody final DTO dto, @PathVariable("id") final ID id) {
-        if (service.existsById(id)) {
             service.update(dto, id);
             return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
     }
     @PostMapping("")
-    public ResponseEntity<String> create(@RequestBody T t){
+    public ResponseEntity<T> create(@RequestBody T t){
         service.save(t);
-        return new ResponseEntity<>("The entity has been created!",HttpStatus.CREATED);
+        return new ResponseEntity<>(t,HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable ID id){
-        if(!service.existsById(id)){
-            return new ResponseEntity<>("Entity was not found!",HttpStatus.NOT_FOUND);
-        }
         service.remove(id);
-        return new ResponseEntity<>("Entity successfuly removed!",HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
