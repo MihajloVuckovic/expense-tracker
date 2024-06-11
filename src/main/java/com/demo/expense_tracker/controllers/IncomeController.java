@@ -31,6 +31,10 @@ import com.demo.expense_tracker.pdf_generator.PDFGenerator;
 import com.demo.expense_tracker.services.IncomeService;
 import com.demo.expense_tracker.utils.TokenUtils;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  *
  * @author mihajlo.vuckovic
@@ -81,6 +85,12 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
 
     @Override
     @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    @Parameters({
+        @Parameter(name = "amount", description = "Income amount", schema = @Schema(type = "string")),
+        @Parameter(name = "description", description = "Income description", schema = @Schema(type = "string")),
+        @Parameter(name = "date", description = "Income date", schema = @Schema(type = "string")),
+        @Parameter(name = "income_group", description = "Income group", schema = @Schema(type = "string"))
+    })
     public Page<IncomeDTO> findAll(@RequestParam(defaultValue="0") int page, 
                                     @RequestParam(defaultValue="10") int size,
                                     @RequestParam(defaultValue="id") String sortBy,

@@ -31,6 +31,10 @@ import com.demo.expense_tracker.pdf_generator.PDFGenerator;
 import com.demo.expense_tracker.services.ExpenseService;
 import com.demo.expense_tracker.utils.TokenUtils;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  *
  * @author mihajlo.vuckovic
@@ -80,11 +84,17 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
 
     @Override
     @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
+    @Parameters({
+        @Parameter(name = "amount", description = "Expense amount", schema = @Schema(type = "string")),
+        @Parameter(name = "description", description = "Expense description", schema = @Schema(type = "string")),
+        @Parameter(name = "date", description = "Expense date", schema = @Schema(type = "string")),
+        @Parameter(name = "expense_group", description = "Expense group", schema = @Schema(type = "string"))
+    })
     public Page<ExpenseDTO> findAll(@RequestParam(defaultValue="0") int page, 
                                     @RequestParam(defaultValue="10") int size,
                                     @RequestParam(defaultValue="id") String sortBy,
                                     @RequestParam(defaultValue="asc") String sortDir,
-                                    @RequestParam(required=false) Map<String, String> allParams) {
+                                    @RequestParam(required = false) Map<String, String> allParams) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
         return expenseService.findAll(pageable, allParams);
