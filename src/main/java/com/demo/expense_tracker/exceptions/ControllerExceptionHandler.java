@@ -7,6 +7,7 @@ package com.demo.expense_tracker.exceptions;
 
 import java.util.Date;
 
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,6 +34,18 @@ public class ControllerExceptionHandler {
     return message;
   }
 
+  @ExceptionHandler(AuthenticationException.class)
+  @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+  public ErrorMessage unauthenticatedException(AuthenticationException ex, WebRequest request){
+    ErrorMessage message = new ErrorMessage(
+        HttpStatus.UNAUTHORIZED.value(),
+        new Date(),
+        ex.getMessage(),
+        request.getDescription(false));
+
+    return message;
+  }
+
   @ExceptionHandler(AccessDeniedException.class)
   @ResponseStatus(value = HttpStatus.FORBIDDEN)
   public ErrorMessage unauthorizedException(AccessDeniedException ex, WebRequest request){
@@ -56,6 +69,4 @@ public class ControllerExceptionHandler {
     
     return message;
   }
-
-  
 }

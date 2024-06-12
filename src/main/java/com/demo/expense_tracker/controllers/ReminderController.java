@@ -17,6 +17,10 @@ import com.demo.expense_tracker.dto.ReminderDTO;
 import com.demo.expense_tracker.model.Reminder;
 import com.demo.expense_tracker.services.ReminderService;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  *
  * @author mihajlo.vuckovic
@@ -54,6 +58,11 @@ public class ReminderController extends GenericController<Reminder, ReminderDTO,
     }
 
     @Override
+    @Parameters({
+        @Parameter(name = "active", description = "Expense amount", schema = @Schema(type = "string")),
+        @Parameter(name = "type", description = "Expense description", schema = @Schema(type = "string")),
+        @Parameter(name = "reminder_date", description = "Expense date", schema = @Schema(type = "string")),
+    })
     @Secured("ROLE_PREMIUM")
     public Page<ReminderDTO> findAll(int page, int size, String sortBy, String sortDir, Map<String, String> allParams) {
         return super.findAll(page, size, sortBy, sortDir, allParams);

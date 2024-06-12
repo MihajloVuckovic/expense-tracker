@@ -7,9 +7,13 @@ package com.demo.expense_tracker.services;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import com.demo.expense_tracker.dto.ReminderDTO;
 import com.demo.expense_tracker.model.Expense;
+import com.demo.expense_tracker.model.QReminder;
 import com.demo.expense_tracker.model.Reminder;
 import com.demo.expense_tracker.model.ReminderType;
 import com.demo.expense_tracker.model.User;
@@ -24,6 +29,7 @@ import com.demo.expense_tracker.repositories.ExpenseRepository;
 import com.demo.expense_tracker.repositories.ReminderRepository;
 import com.demo.expense_tracker.repositories.UserRepository;
 import com.demo.expense_tracker.utils.TokenUtils;
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 /**
  *
@@ -46,10 +52,13 @@ public class ReminderService extends GenericServiceImpl<Reminder, ReminderDTO, L
     @Autowired
     private ExpenseRepository expenseRepository;
 
+    private final ModelMapper mapper;
+
     
     public ReminderService(ReminderRepository reminderRepository){
         super(reminderRepository);
         this.tokenUtils= new TokenUtils();
+        this.mapper = new ModelMapper();
     }
 
     @Override
@@ -132,6 +141,27 @@ public class ReminderService extends GenericServiceImpl<Reminder, ReminderDTO, L
         t.setUser_id(user_id);
         return super.save(t);
     }
+
+    @Override
+    public Page<ReminderDTO> findAll(Pageable pageable, Map<String, String> map) {
+        QReminder qReminder = QReminder.reminder;
+        BooleanExpression predicate = qReminder.isNotNull();
+        Long user_id = tokenUtils.getUserIdFromToken();
+        predicate = predicate.and(qReminder.user_id.eq(user_id));                 
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                switch (key) {
+                    case "type" -> predicate = predicate.and(qReminder.type.eq(ReminderType.valueOf(value)));
+                    case "active" -> predicate = predicate.and(qReminder.active.eq(Boolean.valueOf(value)));
+                    case "reminder_day" -> predicate = predicate.and(qReminder.reminderDay.eq(LocalDate.parse(value)));
+                }
+            }
+        Page<Reminder> reminders = reminderRepository.findAll(predicate, pageable);
+        return reminders.map(reminder -> mapper.map(reminder, getTypeOfDTO()));
+    }
+
+    
 
     
 }

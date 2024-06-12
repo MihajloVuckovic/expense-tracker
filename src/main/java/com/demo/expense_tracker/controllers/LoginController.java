@@ -25,7 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demo.expense_tracker.model.User;
 import com.demo.expense_tracker.utils.TokenUtils;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -45,8 +48,10 @@ public class LoginController {
     @Autowired
     private TokenUtils tokenUtils;
 
+    
     @PostMapping
-    public ResponseEntity<String> login(@RequestBody User user, HttpServletResponse response) {
+    public ResponseEntity<String> login(@Schema(implementation = LoginRequest.class, description = "User login details")
+        @RequestBody User user, HttpServletResponse response) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                     user.getUsername(), user.getPassword());
         Authentication auth = authenticationManager.authenticate(token);
@@ -62,5 +67,15 @@ public class LoginController {
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         return new ResponseEntity<>("Successful login", HttpStatus.OK);
     }
+    
+    @Getter
+    @Setter
+    public static class LoginRequest {
+        @Schema(description = "Username of the user", example = "user1", required = true)
+        private String username;
 
+        @Schema(description = "Password of the user", example = "pass1", required = true, format = "password")
+        private String password;
+
+    }
 }

@@ -89,8 +89,24 @@
         	<artifactId>pdfbox</artifactId>
         	<version>2.0.24</version>
     	</dependency>
-	</dependencies>
-
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>${querydsl.version}</version>
+            <classifier>jakarta</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <version>${querydsl.version}</version>
+            <classifier>jakarta</classifier>
+        </dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+</dependencies>	
 	<build>
 		<plugins>
 			<plugin>
@@ -107,5 +123,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
