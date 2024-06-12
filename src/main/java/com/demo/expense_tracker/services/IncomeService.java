@@ -7,6 +7,7 @@ package com.demo.expense_tracker.services;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -18,8 +19,10 @@ import org.springframework.stereotype.Service;
 
 import com.demo.expense_tracker.dto.IncomeDTO;
 import com.demo.expense_tracker.model.Income;
+import com.demo.expense_tracker.model.QIncome;
 import com.demo.expense_tracker.repositories.IncomeRepository;
 import com.demo.expense_tracker.utils.TokenUtils;
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 /**
  *
@@ -79,9 +82,22 @@ public class IncomeService extends GenericServiceImpl<Income, IncomeDTO, Long> {
     }
 
     @Override
-    public Page<IncomeDTO> findAll(Pageable pageable) {
+    public Page<IncomeDTO> findAll(Pageable pageable, Map<String, String> map) {
+        QIncome qIncome = QIncome.income;
+        BooleanExpression predicate = qIncome.isNotNull();
         Long user_id = tokenUtils.getUserIdFromToken();
-        Page<Income> incomes = incomeRepository.findByUser_id(user_id, pageable);
+        predicate = predicate.and(qIncome.user_id.eq(user_id));                 
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                switch (key) {
+                    case "amount" -> predicate = predicate.and(qIncome.amount.eq(Double.valueOf(value)));
+                    case "description" -> predicate = predicate.and(qIncome.description.containsIgnoreCase(value));
+                    case "date" -> predicate = predicate.and(qIncome.incomeDate.eq(LocalDate.parse(value)));
+                    case "income_group" -> predicate = predicate.and(qIncome.income_group_id.eq(Long.valueOf(value)));
+                }
+            }
+        Page<Income> incomes = incomeRepository.findAll(predicate, pageable);
         return incomes.map(income -> mapper.map(income, getTypeOfDTO()));
     }
 
@@ -92,45 +108,4 @@ public class IncomeService extends GenericServiceImpl<Income, IncomeDTO, Long> {
                         .collect(Collectors.toList());
     }
 
-    public Page<IncomeDTO> filterAmount(Pageable pageable, Double amount){
-        Long user_id = tokenUtils.getUserIdFromToken();
-        Page<Income> incomesAmount = incomeRepository.findByUser_idAndAmount(user_id, amount, pageable);
-        return incomesAmount.map(income -> mapper.map(income, getTypeOfDTO()));
-    }
-
-    public Page<IncomeDTO> filterDescription(Pageable pageable, String description){
-        Long user_id = tokenUtils.getUserIdFromToken();
-        Page<Income> incomesDescription = incomeRepository.findByUser_idAndDescriptionContaining(user_id, description, pageable);
-        return incomesDescription.map(income -> mapper.map(income, getTypeOfDTO()));
-    }
-
-    public Page<IncomeDTO> filterDate(Pageable pageable, LocalDate date){
-        Long user_id = tokenUtils.getUserIdFromToken();
-        Page<Income> incomesDate = incomeRepository.findByUser_idAndIncomeDate(user_id, date, pageable);
-        return incomesDate.map(income -> mapper.map(income, getTypeOfDTO()));
-    }
-
-    public Page<IncomeDTO> filterAmountAndDescription(Pageable pageable, Double amount, String description){
-        Long user_id = tokenUtils.getUserIdFromToken();
-        Page<Income> incomesDate = incomeRepository.findByUser_idAndAmountAndDescriptionContaining(user_id, amount, description, pageable);
-        return incomesDate.map(income -> mapper.map(income, getTypeOfDTO()));
-    }
-
-    public Page<IncomeDTO> filterAmountAndDate(Pageable pageable, Double amount, LocalDate date){
-        Long user_id = tokenUtils.getUserIdFromToken();
-        Page<Income> incomesDate = incomeRepository.findByUser_idAndAmountAndIncomeDate(user_id, amount, date, pageable);
-        return incomesDate.map(income -> mapper.map(income, getTypeOfDTO()));
-    }
-
-    public Page<IncomeDTO> filterDateAndDescription(Pageable pageable, LocalDate date, String description){
-        Long user_id = tokenUtils.getUserIdFromToken();
-        Page<Income> incomesDate = incomeRepository.findByUser_idAndIncomeDateAndDescriptionContaining(user_id, date, description, pageable);
-        return incomesDate.map(income -> mapper.map(income, getTypeOfDTO()));
-    }
-
-    public Page<IncomeDTO> filterAmountAndDescriptionAndIncomeDate(Pageable pageable, Double amount, String description, LocalDate date){
-        Long user_id = tokenUtils.getUserIdFromToken();
-        Page<Income> incomesDate = incomeRepository.findByUser_idAndIncomeDateAndDescriptionContainingAndAmount(user_id, date, description, amount, pageable);
-        return incomesDate.map(income -> mapper.map(income, getTypeOfDTO()));
-    }
 }
