@@ -16,9 +16,12 @@ import org.springframework.stereotype.Service;
 import com.demo.expense_tracker.dto.ExpenseDTO;
 import com.demo.expense_tracker.dto.IncomeDTO;
 import com.demo.expense_tracker.dto.ReminderDTO;
+import com.demo.expense_tracker.dto.UserDTO;
+import com.demo.expense_tracker.model.Dashboard;
 import com.demo.expense_tracker.model.Expense;
 import com.demo.expense_tracker.model.Income;
 import com.demo.expense_tracker.model.Reminder;
+import com.demo.expense_tracker.model.Role;
 import com.demo.expense_tracker.repositories.ExpenseRepository;
 import com.demo.expense_tracker.repositories.IncomeRepository;
 import com.demo.expense_tracker.repositories.ReminderRepository;
@@ -33,6 +36,9 @@ public class DashboardService {
 
     private final TokenUtils tokenUtils;
     private final ModelMapper mapper;
+
+    @Autowired
+    private UserService userService;
 
     public DashboardService(){
         this.mapper= new ModelMapper();
@@ -94,6 +100,21 @@ public class DashboardService {
             incomeDTOs.add(incomeDTO);
         }
         return incomeDTOs;
+    }
+
+    public Dashboard dashboardInfo(){
+        Long user_id = tokenUtils.getUserIdFromToken();
+        UserDTO user = userService.findById(user_id);
+        Dashboard dashboard = new Dashboard();
+        dashboard.setExpenses(getLast5Expenses());
+        dashboard.setIncomes(getLast5Incomes());
+        dashboard.setTotalBalance(getTotalAmount());
+        if(Role.ROLE_STANDARD.equals(user.getRole()) || Role.ROLE_ADMIN.equals(user.getRole())){
+            dashboard.setReminder(null);
+        }else{
+            dashboard.setReminder(getReminderDetails());
+        }
+        return dashboard;
     }
 
     

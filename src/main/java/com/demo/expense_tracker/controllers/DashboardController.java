@@ -29,12 +29,6 @@ public class DashboardController {
     @GetMapping("")
     @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
     public ResponseEntity<Dashboard> dashboardInfo(){
-        Dashboard dashboard = new Dashboard();
-        dashboard.setExpenses(dashboardService.getLast5Expenses());
-        dashboard.setIncomes(dashboardService.getLast5Incomes());
-        dashboard.setTotalBalance(dashboardService.getTotalAmount());
-        dashboard.setReminder(dashboardService.getReminderDetails());
-
-        return new ResponseEntity<>(dashboard, HttpStatus.OK);
+        return new ResponseEntity<>(dashboardService.dashboardInfo(), HttpStatus.OK);
     }
 }
