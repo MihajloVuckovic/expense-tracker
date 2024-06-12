@@ -74,7 +74,7 @@ public class ReminderService extends GenericServiceImpl<Reminder, ReminderDTO, L
     }
 
     
-    @Scheduled(cron="0 47 13 * * ?")   
+    @Scheduled(cron="0 0 12 * * ?")   
     public void sendReminders(){
         LocalDate now = LocalDate.now();
         List<Reminder> remindersLeft = reminderRepository.findByReminderDay(now);
