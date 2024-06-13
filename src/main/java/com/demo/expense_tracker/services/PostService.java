@@ -5,8 +5,6 @@
 
 package com.demo.expense_tracker.services;
 
-import java.math.BigInteger;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -59,8 +57,6 @@ public class PostService {
             Post post = response.getData();
             return post;
     }
-
-
 
     @Getter
     @Setter

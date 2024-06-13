@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,7 @@ public class PostController {
     }
     
     @GetMapping("")
+    @Secured("ROLE_PREMIUM")
     public Page<Post> getPosts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue="id") String sortBy,
     @RequestParam(defaultValue="asc") String sortDir){
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
@@ -47,6 +49,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
+    @Secured("ROLE_PREMIUM")
     public Post getOnePost(@PathVariable Long id){
         return postService.getOnePost(id);
     }
