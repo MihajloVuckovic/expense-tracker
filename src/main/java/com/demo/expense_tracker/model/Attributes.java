@@ -22,8 +22,9 @@ public class Attributes {
     private String createdAt;
     private String updatedAt;
     private String publishedAt;
+    private String author;
     private String title;
     private String content;
-    private String author;
+    
     
 }

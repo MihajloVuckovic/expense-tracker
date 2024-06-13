@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.demo.expense_tracker.model.Role;
 import com.demo.expense_tracker.model.User;
 
 import io.jsonwebtoken.Claims;
@@ -91,6 +92,15 @@ public class TokenUtils {
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             return ((User) userDetails).getId();
+        }
+        return null;
+    }
+
+	public Role getUserRoleFromToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return ((User) userDetails).getRole();
         }
         return null;
     }

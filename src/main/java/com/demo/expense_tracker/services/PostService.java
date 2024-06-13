@@ -7,6 +7,7 @@ package com.demo.expense_tracker.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,8 @@ import reactor.core.publisher.Mono;
 @Service
 public class PostService {
 
+    @Value("${strapi.token}")
+    private String apiToken;
     private final WebClient webClient;
 
     public PostService(WebClient webClient) {
@@ -33,9 +36,11 @@ public class PostService {
     }
 
     public Page<Post> getAllPosts(Pageable pageable) {
+        
         String url = "http://localhost:1337/api/posts";
             Mono<Response> responseMono = webClient.get()
                     .uri(url)
+                    .headers(headers -> headers.setBearerAuth(apiToken))
                     .retrieve()
                     .bodyToMono(Response.class);
 
@@ -51,6 +56,7 @@ public class PostService {
     public Post getOnePost(Long  id){
         Mono<SingleResponse> responseMono = webClient.get()
             .uri("http://localhost:1337/api/posts/{id}", id)
+            .headers(headers -> headers.setBearerAuth(apiToken))
             .retrieve()
             .bodyToMono(SingleResponse.class);
             SingleResponse response =  responseMono.block();
