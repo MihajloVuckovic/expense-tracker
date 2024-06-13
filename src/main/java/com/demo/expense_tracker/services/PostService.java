@@ -8,16 +8,17 @@ package com.demo.expense_tracker.services;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.demo.expense_tracker.model.Post;
 
 import lombok.Getter;
 import lombok.Setter;
+import reactor.core.publisher.Mono;
 
 /**
  *
@@ -26,26 +27,26 @@ import lombok.Setter;
 @Service
 public class PostService {
 
-    @Autowired
-    private final RestTemplate restTemplate;
+    private final WebClient webClient;
 
-    public PostService(RestTemplate restTemplate){
-        this.restTemplate=restTemplate;
+    public PostService(WebClient webClient) {
+        this.webClient = webClient;
     }
 
-    public List<Post> getAllPosts() {
+    public Page<Post> getAllPosts(Pageable pageable) {
         String url = "http://localhost:1337/api/posts";
-        try {
-            Response response = restTemplate.getForObject(url, Response.class);
+            Mono<Response> responseMono = webClient.get()
+                    .uri(url)
+                    .retrieve()
+                    .bodyToMono(Response.class);
+
+            Response response = responseMono.block(); 
             if (response != null && response.getData() != null) {
-                return Arrays.asList(response.getData());
+                List<Post> posts = Arrays.asList(response.getData());
+                return new PageImpl<>(posts, pageable , posts.size());
             }
-            return List.of();
-        } catch (HttpClientErrorException | HttpServerErrorException e) {
-            
-            System.err.println("Error fetching posts: " + e.getMessage());
-            return List.of();
-        }
+
+        return Page.empty();
     }
 
     @Getter
