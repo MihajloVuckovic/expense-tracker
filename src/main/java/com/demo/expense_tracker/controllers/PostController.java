@@ -5,17 +5,23 @@
 
 package com.demo.expense_tracker.controllers;
 
+import java.math.BigInteger;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.expense_tracker.model.Post;
 import com.demo.expense_tracker.services.PostService;
+
+import reactor.core.publisher.Mono;
 
 
 
@@ -39,4 +45,10 @@ public class PostController {
         Pageable pageable = PageRequest.of(page, size, sort);
         return postService.getAllPosts(pageable);
     }
+
+    @GetMapping("/{id}")
+    public Post getOnePost(@PathVariable Long id){
+        return postService.getOnePost(id);
+    }
+    
 }

@@ -19,10 +19,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Attributes {
-    private String title;
-    private String author;
-    private String content;
     private String createdAt;
     private String updatedAt;
     private String publishedAt;
+    private String title;
+    private String content;
+    private String author;
+    
 }

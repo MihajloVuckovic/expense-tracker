@@ -5,6 +5,7 @@
 
 package com.demo.expense_tracker.services;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,16 +43,34 @@ public class PostService {
 
             Response response = responseMono.block(); 
             if (response != null && response.getData() != null) {
-                List<Post> posts = Arrays.asList(response.getData());
+                List<Post> posts = response.getData();
                 return new PageImpl<>(posts, pageable , posts.size());
             }
 
         return Page.empty();
     }
 
+    public Post getOnePost(Long  id){
+        Mono<SingleResponse> responseMono = webClient.get()
+            .uri("http://localhost:1337/api/posts/{id}", id)
+            .retrieve()
+            .bodyToMono(SingleResponse.class);
+            SingleResponse response =  responseMono.block();
+            Post post = response.getData();
+            return post;
+    }
+
+
+
     @Getter
     @Setter
     private static class Response {
-        private Post[] data;
+        private List<Post> data;
+    }
+
+    @Getter
+    @Setter
+    private static class SingleResponse{
+        private Post data;
     }
 }
