@@ -33,10 +33,10 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class TokenUtils {
     
-    @Value("${token.secret}")
+    @Value("${JWT_SECRET}")
 	private String secret;
 
-	@Value("${token.expiration}")
+	@Value("${JWT_EXPIRATION}")
 	private Long expiration;
 
 	@Bean
@@ -71,7 +71,7 @@ public class TokenUtils {
 		claims.put("email", ((User) userDetails).getEmail());
 		claims.put("id", ((User) userDetails).getId());
 		claims.put("authorities", userDetails.getAuthorities());
-		claims.put("created", new Date(System.currentTimeMillis()));
+		claims.put("iat", new Date(System.currentTimeMillis()));
 
 		return Jwts.builder()
 				.setClaims(claims)

@@ -27,7 +27,7 @@ import reactor.core.publisher.Mono;
 @Service
 public class PostService {
 
-    @Value("${strapi.token}")
+    @Value("${STRAPI_API}")
     private String apiToken;
     private final WebClient webClient;
 
