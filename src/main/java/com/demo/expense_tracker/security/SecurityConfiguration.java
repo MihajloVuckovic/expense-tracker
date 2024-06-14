@@ -30,7 +30,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity(securedEnabled=true, prePostEnabled=true)
 public class SecurityConfiguration {
 
-	@Value("${token.secret}")
+	@Value("${JWT_SECRET}")
 	private String secret;
 
     @Autowired
