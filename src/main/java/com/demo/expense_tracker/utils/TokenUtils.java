@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.demo.expense_tracker.model.Role;
 import com.demo.expense_tracker.model.User;
 
 import io.jsonwebtoken.Claims;
@@ -32,10 +33,10 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class TokenUtils {
     
-    @Value("${token.secret}")
+    @Value("${JWT_SECRET}")
 	private String secret;
 
-	@Value("${token.expiration}")
+	@Value("${JWT_EXPIRATION}")
 	private Long expiration;
 
 	@Bean
@@ -70,7 +71,7 @@ public class TokenUtils {
 		claims.put("email", ((User) userDetails).getEmail());
 		claims.put("id", ((User) userDetails).getId());
 		claims.put("authorities", userDetails.getAuthorities());
-		claims.put("created", new Date(System.currentTimeMillis()));
+		claims.put("iat", new Date(System.currentTimeMillis()));
 
 		return Jwts.builder()
 				.setClaims(claims)
@@ -91,6 +92,15 @@ public class TokenUtils {
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             return ((User) userDetails).getId();
+        }
+        return null;
+    }
+
+	public Role getUserRoleFromToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return ((User) userDetails).getRole();
         }
         return null;
     }
