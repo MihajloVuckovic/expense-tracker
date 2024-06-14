@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet author="m.vuckovic" id="user">
+        <insert tableName="user">
+            <column name="id" valueNumeric="1"/>
+            <column name="username" value="standard"/>
+            <column name="password" value="$2a$12$cu/eaHE3lgR6td9TvygJSuEzNnZANfdMVypvW6oADOka79LsXVfy2"/>
+            <column name="email" value="mihajlo.vuckovic00@gmail.com"/>
+            <column name="role" value="ROLE_STANDARD"/>
+        </insert>
+        <insert tableName="user">
+            <column name="id" valueNumeric="2"/>
+            <column name="username" value="premium"/>
+            <column name="password" value="$2a$12$LBYiaY3h3zsWbI/CsXGBIO16qh93My7MT48eC7IrNRZjPT/D6FpFq"/>
+            <column name="email" value="demopraktikant@gmail.com"/>
+            <column name="role" value="ROLE_PREMIUM"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
