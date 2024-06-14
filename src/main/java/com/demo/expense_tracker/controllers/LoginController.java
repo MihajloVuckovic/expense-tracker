@@ -37,7 +37,7 @@ import lombok.Setter;
 @RestController
 @RequestMapping("/api/login")
 public class LoginController {
-    @Value("${token.expiration}")
+    @Value("${JWT_EXPIRATION}")
     private Long expiration;
     @Autowired
     private UserDetailsService userDetailsService;

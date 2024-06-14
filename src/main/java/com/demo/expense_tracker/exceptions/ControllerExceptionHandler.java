@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
 
 /**
  *
  * @author mihajlo.vuckovic
  */
 @RestControllerAdvice
-public class ControllerExceptionHandler {
+public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 
   @ExceptionHandler(ResourceNotFoundException.class)
   @ResponseStatus(value = HttpStatus.NOT_FOUND)
@@ -71,14 +72,14 @@ public class ControllerExceptionHandler {
     return message;
   }
 
-  @ExceptionHandler(value = AsyncRequestTimeoutException.class)
-  @ResponseStatus(value = HttpStatus.REQUEST_TIMEOUT)
-    public ErrorMessage handleAsyncTimeout(AsyncRequestTimeoutException ex,WebRequest request) {
+  @ExceptionHandler(value = WebClientResponseException.class)
+    public ErrorMessage handleStrapiForbidden(WebClientResponseException ex, WebRequest request) {
         ErrorMessage message = new ErrorMessage(
-          HttpStatus.REQUEST_TIMEOUT.value(),
+          ex.getStatusCode().value(),
           new Date(),
           ex.getMessage(),
           request.getDescription(false));
         return message;
     }
+
 }
