@@ -58,9 +58,9 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
     public @ResponseBody byte[] exportToPdf() throws IOException{
         Iterable<ExpenseDTO> expenses = expenseService.findAll();
         ByteArrayOutputStream pdfOutputStream = PDFGenerator.generatePdf(expenses, ExpenseDTO.class);
-        byte[] pdfBytes = pdfOutputStream.toByteArray();
 
-        return pdfBytes;
+        assert pdfOutputStream != null;
+        return pdfOutputStream.toByteArray();
     }
 
     @GetMapping("/export/email")
@@ -71,6 +71,7 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
         ByteArrayOutputStream pdfOutputStream = PDFGenerator.generatePdf(expenses, ExpenseDTO.class);
 
         String recipientEmail = tokenUtils.getUserEmailFromToken();
+        assert pdfOutputStream != null;
         emailService.sendEmailWithAttachment(
                 recipientEmail,
                 "Expenses PDF",

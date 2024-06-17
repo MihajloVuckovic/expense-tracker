@@ -59,9 +59,9 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
         Iterable<IncomeDTO> incomes = incomeService.findAll();
         
         ByteArrayOutputStream pdfOutputStream = PDFGenerator.generatePdf(incomes, IncomeDTO.class);
-        byte[] pdfBytes = pdfOutputStream.toByteArray();
 
-        return pdfBytes;
+        assert pdfOutputStream != null;
+        return pdfOutputStream.toByteArray();
     }
 
     @GetMapping("/export/email")
@@ -72,6 +72,7 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
         ByteArrayOutputStream pdfOutputStream = PDFGenerator.generatePdf(incomes, IncomeDTO.class);
 
         String recipientEmail = tokenUtils.getUserEmailFromToken();
+        assert pdfOutputStream != null;
         emailService.sendEmailWithAttachment(
                 recipientEmail,
                 "Incomes PDF",
