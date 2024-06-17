@@ -12,12 +12,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 @ActiveProfiles("test")
 class ExpenseTrackerApplicationTests {
 
-	// @BeforeAll
-    // public static void setup() {
-    //     Dotenv dotenv = Dotenv.configure().directory("C:/Users/mihajlo.vuckovic/Desktop/Expense Tracker").load();
-    //     dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
-    // }
-
 	@Test
 	void contextLoads() {
 	}
