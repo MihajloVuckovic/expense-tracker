@@ -60,7 +60,6 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
         
         ByteArrayOutputStream pdfOutputStream = PDFGenerator.generatePdf(incomes, IncomeDTO.class);
 
-        assert pdfOutputStream != null;
         return pdfOutputStream.toByteArray();
     }
 

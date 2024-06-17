@@ -55,11 +55,10 @@ public class ExpenseController extends GenericController<Expense, ExpenseDTO, Lo
 
     @GetMapping(value="/export/pdf", produces=MediaType.APPLICATION_PDF_VALUE)
     @Secured({"ROLE_PREMIUM", "ROLE_STANDARD"})
-    public @ResponseBody byte[] exportToPdf() throws IOException{
+    public @ResponseBody byte[] exportToPdf() throws IOException {
         Iterable<ExpenseDTO> expenses = expenseService.findAll();
         ByteArrayOutputStream pdfOutputStream = PDFGenerator.generatePdf(expenses, ExpenseDTO.class);
-
-        assert pdfOutputStream != null;
+        
         return pdfOutputStream.toByteArray();
     }
 
