@@ -71,7 +71,7 @@ public class IncomeController extends GenericController<Income, IncomeDTO, Long>
         ByteArrayOutputStream pdfOutputStream = PDFGenerator.generatePdf(incomes, IncomeDTO.class);
 
         String recipientEmail = tokenUtils.getUserEmailFromToken();
-        assert pdfOutputStream != null;
+
         emailService.sendEmailWithAttachment(
                 recipientEmail,
                 "Incomes PDF",
