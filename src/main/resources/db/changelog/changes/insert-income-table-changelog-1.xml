@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet author="m.vuckovic" id="income">
+        
+        <insert tableName="income">
+            <column name="id" valueNumeric="1"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="income_group_id" valueNumeric="1"/>
+            <column name="income_date" value="2024-05-14"/>
+            <column name="amount" value="20000"/>
+            <column name="description" value="First rate from client 1"/>
+        </insert>
+        <insert tableName="income">
+            <column name="id" valueNumeric="2"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="income_group_id" valueNumeric="1"/>
+            <column name="income_date" value="2024-06-14"/>
+            <column name="amount" value="50000"/>
+            <column name="description" value="Second rate from client 1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
