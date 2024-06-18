@@ -69,5 +69,22 @@ public class IncomeGroupTest {
 
     }
 
+    @Test
+    void getReminder() throws  Exception{
+        User user = new User();
+        user.setUsername("standard");
+        user.setPassword("password");
+        user.setEmail("standard@example.com");
+        user.setRole(Role.ROLE_STANDARD);
+
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/dashboard/reminders")
+        ).andExpect(MockMvcResultMatchers.status().isForbidden());
+
+    }
+
 
 }
