@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package com.demo.expense_tracker.thread_pool;
+package com.demo.expense_tracker.config.thread_pool;
 
 import java.util.concurrent.Executor;
 
