@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet author="m.vuckovic" id="1">
+        <sql>CREATE TABLE IF NOT EXISTS `expense-tracker-docker`.`expense_group` (
+            `id` BIGINT NOT NULL AUTO_INCREMENT,
+            `description` VARCHAR(255) NULL DEFAULT NULL,
+            `name` VARCHAR(255) NULL DEFAULT NULL,
+            PRIMARY KEY (`id`))
+            ENGINE = InnoDB
+            AUTO_INCREMENT = 2
+            DEFAULT CHARACTER SET = utf8mb4
+            COLLATE = utf8mb4_0900_ai_ci;</sql>
+    </changeSet>
+</databaseChangeLog>

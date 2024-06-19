@@ -5,7 +5,12 @@
         xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    
+    <include file="/db/changelog/changes/create-table-user-changelog.xml" />
+    <include file="/db/changelog/changes/create-table-expense_group-changelog.xml" />
+    <include file="/db/changelog/changes/create-table-income_group-changelog.xml" />
+    <include file="/db/changelog/changes/create-table-expense-changelog.xml" />
+    <include file="/db/changelog/changes/create-table-income-changelog.xml" />
+    <include file="/db/changelog/changes/create-table-reminder-changelog.xml" />
     <include file="/db/changelog/changes/insert-user-table-changelog-1.xml" />
     <include file="/db/changelog/changes/insert-expense_group-table-changelog-1.xml" />
     <include file="/db/changelog/changes/insert-income_group-table-changelog-1.xml" />

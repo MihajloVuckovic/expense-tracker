@@ -29,6 +29,8 @@ public class PostService {
 
     @Value("${STRAPI_API}")
     private String apiToken;
+    @Value("${STRAPI_URL}")
+    String url;
     private final WebClient webClient;
 
     public PostService(WebClient webClient) {
@@ -36,8 +38,8 @@ public class PostService {
     }
 
     public Page<Post> getAllPosts(Pageable pageable) {
-        
-        String url = "http://localhost:1337/api/posts";
+
+
             Mono<Response> responseMono = webClient.get()
                     .uri(url)
                     .headers(headers -> headers.setBearerAuth(apiToken))

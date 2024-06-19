@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet author="m.vuckovic" id="1">
+        <sql>CREATE TABLE IF NOT EXISTS `expense-tracker-docker`.`expense` (
+            `amount` DOUBLE NULL DEFAULT NULL,
+            `expense_date` DATE NULL DEFAULT NULL,
+            `expense_group_id` BIGINT NULL DEFAULT NULL,
+            `id` BIGINT NOT NULL AUTO_INCREMENT,
+            `user_id` BIGINT NULL DEFAULT NULL,
+            `description` VARCHAR(255) NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            INDEX `FKnela9oeq8fkibex6xs93qtuft` (`expense_group_id` ASC) VISIBLE,
+            INDEX `FK758h5dgdblrpwoaaycbmn29i0` (`user_id` ASC) VISIBLE,
+            CONSTRAINT `FK758h5dgdblrpwoaaycbmn29i0`
+            FOREIGN KEY (`user_id`)
+            REFERENCES `expense-tracker-docker`.`user` (`id`),
+            CONSTRAINT `FKnela9oeq8fkibex6xs93qtuft`
+            FOREIGN KEY (`expense_group_id`)
+            REFERENCES `expense-tracker-docker`.`expense_group` (`id`))
+            ENGINE = InnoDB
+            AUTO_INCREMENT = 3
+            DEFAULT CHARACTER SET = utf8mb4
+            COLLATE = utf8mb4_0900_ai_ci;</sql>
+    </changeSet>
+</databaseChangeLog>
