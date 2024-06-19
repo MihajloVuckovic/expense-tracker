@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package com.demo.expense_tracker.security;
+package com.demo.expense_tracker.config.security;
 
 import java.io.IOException;
 

@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package com.demo.expense_tracker.pdf_generator;
+package com.demo.expense_tracker.config.email_config;
 
 import java.util.Properties;
 
