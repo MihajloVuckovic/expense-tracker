@@ -3,7 +3,7 @@
 		"_postman_id": "3c52199b-32fe-4360-a314-da6114872066",
 		"name": "Expense Tracker Collection",
 		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27342963"
 	},
 	"item": [
@@ -28,8 +28,51 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": "localhost:8080/api/incomes",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdGFuZGFyZCIsImNyZWF0ZWQiOjE3MTc3NjkwMjI5MzUsImlkIjoxLCJlbWFpbCI6ImRlbW9wcmFrdGlrYW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJTVEFOREFSRCJ9XSwiZXhwIjoxNzE3Nzc2MjIyfQ.n0Z6xFpt7maRIBN_EJ657EKRJlIt3ElcNGgJ0DGus6wilXFh5F8HDePXJRivNT-g"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/dashboard/incomes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"incomes"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "Nesto",
+									"disabled": true
+								},
+								{
+									"key": "amount",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "amount",
+									"disabled": true
+								}
+							]
+						},
 						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
 					},
 					"response": []
@@ -46,7 +89,8 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -55,14 +99,25 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+							"raw": "{\n\t\"description\": \"Monthly income\",\n    \"amount\": \"100000\",\n    \"income_group_id\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{base_url}}/info",
+						"url": {
+							"raw": "localhost:8080/api/dashboard/incomes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"incomes"
+							]
+						},
 						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
 					},
 					"response": []
@@ -79,16 +134,22 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdGFuZGFyZCIsImNyZWF0ZWQiOjE3MTc3NTE1NDM5MzMsImlkIjoxLCJlbWFpbCI6ImRlbW9wcmFrdGlrYW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJTVEFOREFSRCJ9XSwiZXhwIjoxNzE3NzU4NzQzfQ.vYoAp6rpWFC89sb12Ak0KNxQweGepYJ8pQ6GZD4QgIZCfWBQBS_xFxfnQFIfkzLG"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+							"raw": "{\n\t\"amount\": 15000\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -96,18 +157,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/info?id=1",
+							"raw": "localhost:8080/api/dashboard/incomes/4",
 							"host": [
-								"{{base_url}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
-								"info"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"api",
+								"dashboard",
+								"incomes",
+								"4"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -126,13 +185,20 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdGFuZGFyZCIsImNyZWF0ZWQiOjE3MTc3NTE1NDM5MzMsImlkIjoxLCJlbWFpbCI6ImRlbW9wcmFrdGlrYW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJTVEFOREFSRCJ9XSwiZXhwIjoxNzE3NzU4NzQzfQ.vYoAp6rpWFC89sb12Ak0KNxQweGepYJ8pQ6GZD4QgIZCfWBQBS_xFxfnQFIfkzLG",
+								"disabled": true
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -143,21 +209,63 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/info?id=1",
+							"raw": "localhost:8080/api/dashboard/incomes/3",
 							"host": [
-								"{{base_url}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
-								"info"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"api",
+								"dashboard",
+								"incomes",
+								"3"
 							]
 						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Incomes Export to PDF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/dashboard/incomes/export/pdf",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"incomes",
+								"export",
+								"pdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incomes Export to Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/dashboard/incomes/export/email",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"incomes",
+								"export",
+								"email"
+							]
+						}
 					},
 					"response": []
 				}
@@ -171,7 +279,18 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8080/api/income-groups"
+						"url": {
+							"raw": "localhost:8080/api/dashboard/income-groups",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"income-groups"
+							]
+						}
 					},
 					"response": []
 				},
@@ -187,7 +306,8 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -196,14 +316,25 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+							"raw": "{\n\t\"name\": \"Client 1\",\n    \"description\": \"Income from client 1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{base_url}}/info",
+						"url": {
+							"raw": "localhost:8080/api/dashboard/income-groups",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"income-groups"
+							]
+						},
 						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
 					},
 					"response": []
@@ -220,7 +351,8 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -237,18 +369,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/info?id=1",
+							"raw": "localhost:8080/api/dashboard/income-groups/{{id}}",
 							"host": [
-								"{{base_url}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
-								"info"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"api",
+								"dashboard",
+								"income-groups",
+								"{{id}}"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -267,7 +397,8 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -284,18 +415,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/info?id=1",
+							"raw": "localhost:8080/api/dashboard/income-groups/{{id}}",
 							"host": [
-								"{{base_url}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
-								"info"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"api",
+								"dashboard",
+								"income-groups",
+								"{{id}}"
 							]
 						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -310,8 +439,71 @@
 				{
 					"name": "Expenses-GET",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdGFuZGFyZCIsImNyZWF0ZWQiOjE3MTc3NjkwMjI5MzUsImlkIjoxLCJlbWFpbCI6ImRlbW9wcmFrdGlrYW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJTVEFOREFSRCJ9XSwiZXhwIjoxNzE3Nzc2MjIyfQ.n0Z6xFpt7maRIBN_EJ657EKRJlIt3ElcNGgJ0DGus6wilXFh5F8HDePXJRivNT-g",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/dashboard/expenses",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"expenses"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "amount",
+									"disabled": true
+								},
+								{
+									"key": "sortDir",
+									"value": "desc",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "Nesto",
+									"disabled": true
+								},
+								{
+									"key": "amount",
+									"value": "5000",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "Nesto2",
+									"disabled": true
+								},
+								{
+									"key": "date",
+									"value": "2024-04-05",
+									"disabled": true
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -327,23 +519,38 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+							"raw": "{\n\t\"amount\": 5000,\n    \"expense_group_id\": 1,\n    \"description\": \"Autobus\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{base_url}}/info",
+						"url": {
+							"raw": "localhost:8080/api/dashboard/expenses",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"expenses"
+							]
+						},
 						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
 					},
 					"response": []
@@ -360,7 +567,8 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -377,18 +585,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/info?id=1",
+							"raw": "localhost:8080/api/dashboard/expenses/{{id}}",
 							"host": [
-								"{{base_url}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
-								"info"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"api",
+								"dashboard",
+								"expenses",
+								"{{id}}"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -407,7 +613,8 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -424,21 +631,63 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/info?id=1",
+							"raw": "localhost:8080/api/dashboard/expenses/{{id}}",
 							"host": [
-								"{{base_url}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
-								"info"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"api",
+								"dashboard",
+								"expenses",
+								"{{id}}"
 							]
 						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Export Expenses to Pdf",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/dashboard/expenses/export/pdf",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"expenses",
+								"export",
+								"pdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export Expenses to Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/dashboard/incomes/export/email",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"incomes",
+								"export",
+								"email"
+							]
+						}
 					},
 					"response": []
 				}
@@ -451,7 +700,19 @@
 					"name": "Expense-groups-GET",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/dashboard/expense-groups",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"expense-groups"
+							]
+						}
 					},
 					"response": []
 				},
@@ -467,23 +728,45 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdGFuZGFyZCIsImNyZWF0ZWQiOjE3MTgwMDY2NjY0ODksImlkIjoxLCJlbWFpbCI6Im1paGFqbG8udnVja292aWMwMEBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9TVEFOREFSRCJ9XSwiZXhwIjoxNzE4MDEzODY2fQ._APfHu6JsmKmxeNSLR4V3u8ci4_mdI7IZu0QuacD_pWz02bQVozL9tHhJQ8trTww",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+							"raw": "{\n\t\"name\": \"Travel Fees\",\n    \"description\":\"Fees related to traveling\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{base_url}}/info",
+						"url": {
+							"raw": "localhost:8080/api/dashboard/expense-groups",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"expense-groups"
+							]
+						},
 						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
 					},
 					"response": []
@@ -500,7 +783,8 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -517,18 +801,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/info?id=1",
+							"raw": "localhost:8080/api/dashboard/expense-groups/{{id}}",
 							"host": [
-								"{{base_url}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
-								"info"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"api",
+								"dashboard",
+								"expense-groups",
+								"{{id}}"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -547,7 +829,8 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -564,18 +847,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/info?id=1",
+							"raw": "localhost:8080/api/dashboard/expense-groups/{{id}}",
 							"host": [
-								"{{base_url}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
-								"info"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"api",
+								"dashboard",
+								"expense-groups",
+								"{{id}}"
 							]
 						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -590,8 +871,30 @@
 				{
 					"name": "Reminders-GET",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwcmVtaXVtIiwiY3JlYXRlZCI6MTcxODAwNjk0ODg1OSwiaWQiOjIsImVtYWlsIjoiZGVtb3ByYWt0aWthbnRAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfUFJFTUlVTSJ9XSwiZXhwIjoxNzE4MDE0MTQ4fQ.E59RW7zWt_e1YT76iCp7aGv55cCXaQ-Uf_gs6QKGfneDNgJnuYxzoIplK6ewrlLu",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/dashboard/reminders",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"reminders"
+							]
+						}
 					},
 					"response": []
 				},
@@ -607,23 +910,45 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwcmVtaXVtIiwiY3JlYXRlZCI6MTcxODAwNjk0ODg1OSwiaWQiOjIsImVtYWlsIjoiZGVtb3ByYWt0aWthbnRAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfUFJFTUlVTSJ9XSwiZXhwIjoxNzE4MDE0MTQ4fQ.E59RW7zWt_e1YT76iCp7aGv55cCXaQ-Uf_gs6QKGfneDNgJnuYxzoIplK6ewrlLu",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+							"raw": "{\n    \"active\": \"true\",\n    \"type\":\"WEEKLY\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{base_url}}/info",
+						"url": {
+							"raw": "localhost:8080/api/dashboard/reminders",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"reminders"
+							]
+						},
 						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
 					},
 					"response": []
@@ -640,7 +965,8 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -649,7 +975,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+							"raw": "{\n\t\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -657,18 +983,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/info?id=1",
+							"raw": "localhost:8080/api/dashboard/reminders/{{id}}",
 							"host": [
-								"{{base_url}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
-								"info"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"api",
+								"dashboard",
+								"reminders",
+								"{{id}}"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -704,12 +1028,310 @@
 								}
 							}
 						},
-						"url": "localhost:8080/api/reminders",
+						"url": {
+							"raw": "localhost:8080/api/dashboard/reminders/{{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"reminders",
+								"{{id}}"
+							]
+						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
 					},
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "User CRUD",
+			"item": [
+				{
+					"name": "Users-POST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"premium\",\r\n    \"password\": \"premium\",\r\n    \"email\": \"demopraktikant@gmail.com\",\r\n    \"role\": \"ROLE_PREMIUM\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users-GET",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"premium\",\r\n    \"password\": \"premium\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user"
+							],
+							"query": [
+								{
+									"key": "remember-me",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users-PUT",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwcmVtaXVtIiwiY3JlYXRlZCI6MTcxODAxMDAwODgwMCwiaWQiOjIsImVtYWlsIjoiZGVtb3ByYWt0aWthbnRAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfUFJFTUlVTSJ9XSwiZXhwIjoxNzE4MDE3MjA4fQ.yLNbMeAxbVWBkllczje8QLSXCMdU7ldC1C8UadY4pMA166piicFRWEvpB9JMAa18",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"premium2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users-DELETE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwcmVtaXVtIiwiY3JlYXRlZCI6MTcxODAxMDAwODgwMCwiaWQiOjIsImVtYWlsIjoiZGVtb3ByYWt0aWthbnRAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfUFJFTUlVTSJ9XSwiZXhwIjoxNzE4MDE3MjA4fQ.yLNbMeAxbVWBkllczje8QLSXCMdU7ldC1C8UadY4pMA166piicFRWEvpB9JMAa18",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/user/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdGFuZGFyZCIsImNyZWF0ZWQiOjE3MTgwMDQ0MTQwODIsImlkIjoxLCJlbWFpbCI6ImRlbW9wcmFrdGlrYW50QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJTVEFOREFSRCJ9XSwiZXhwIjoxNzE4MDExNjE0fQ.ZzNZnCcd1R6QjikphkUHXZd54d1zi5Y0zbN01H769Yna7-RasoGTs7i7l1FPY3nZ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/dashboard",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"dashboard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Blog",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 23fe22f5b1e4db13bfef1330da227a5b2ef8d09506ea45dc79ad200f52923d71696058ea70ba7f3175ee85f89cf2b46836c14c6a9cf40c67cebde50c4c4c8f25c3b13b18111ce79582b8d3bcc86aed020106a7a2ee1b80c01b16c94659ba0d5c23e2f92e95e6d30577041350708e8355dab922dd79467209c513b19ef4c7eb78",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/posts/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts",
+						""
+					],
+					"query": [
+						{
+							"key": "sortBy",
+							"value": "id",
+							"disabled": true
+						},
+						{
+							"key": "sortDir",
+							"value": "desc",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Strapi posts",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/posts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"standard\",\r\n    \"password\": \"standard\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
