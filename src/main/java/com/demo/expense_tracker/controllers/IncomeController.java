@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.expense_tracker.dto.IncomeDTO;
 import com.demo.expense_tracker.model.Income;
-import com.demo.expense_tracker.pdf_generator.EmailService;
-import com.demo.expense_tracker.pdf_generator.PDFGenerator;
+import com.demo.expense_tracker.config.email_config.EmailService;
+import com.demo.expense_tracker.config.PDFGenerator;
 import com.demo.expense_tracker.services.IncomeService;
 import com.demo.expense_tracker.utils.TokenUtils;
 
