@@ -60,7 +60,8 @@ public class LoginController {
         String jwt = tokenUtils.generateToken(userDetails);
         ResponseCookie cookie = ResponseCookie.from("accessToken", jwt)
             .httpOnly(true)
-            .secure(false)
+            .secure(true)
+                .sameSite("Strict")
             .path("/")
             .maxAge(expiration)
             .build();
