@@ -532,7 +532,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"amount\": 5000,\n    \"expense_group_id\": 1,\n    \"description\": \"Autobus\"\n}",
+							"raw": "{\n\t\"amount\": 5000,\n    \"expense_group_id\": 1,\n    \"description\": \"Autobus\",\n    \"user_id\" = 15\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1328,6 +1328,34 @@
 					"path": [
 						"api",
 						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transaction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": \"expense\",\r\n    \"amount\": 5000,\r\n    \"description\": \"some expense\",\r\n    \"group_id\": 1,\r\n    \"user_id\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/transactions",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transactions"
 					]
 				}
 			},
