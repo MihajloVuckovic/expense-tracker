@@ -1,16 +1,13 @@
 package com.demo.expense_tracker.config.rabbitMq;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.io.Serializable;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class Transaction implements Serializable {
     private String type;
     private double amount;
