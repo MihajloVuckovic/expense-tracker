@@ -22,31 +22,25 @@ public class TransactionListener {
     @Autowired
     private IncomeService incomeService;
 
+    @Autowired
+    private TransactionHandlerFactory transactionHandlerFactory;
+
     @Transactional
     @RabbitListener(queues = "q.transactions")
     public void handleTransaction(Transaction transaction) {
+        validateTransaction(transaction);
+        TransactionHandler handler = transactionHandlerFactory.getHandler(transaction.getType());
 
-            if ("expense".equalsIgnoreCase(transaction.getType())) {
-                Expense expense = new Expense();
-                expense.setAmount(transaction.getAmount());
-                expense.setDescription(transaction.getDescription());
-                expense.setExpense_group_id(transaction.getGroup_id());
-                if (transaction.getUser_id() == null) {
-                    throw new RabbitMQException("User id is null");
-                }
-                expense.setUser_id(transaction.getUser_id());
-                expenseService.save(expense);
-            } else if ("income".equalsIgnoreCase(transaction.getType())) {
-                Income income = new Income();
-                income.setAmount(transaction.getAmount());
-                income.setDescription(transaction.getDescription());
-                income.setIncome_group_id(transaction.getGroup_id());
-                if (transaction.getUser_id() == null) {
-                    throw new RabbitMQException("User_id is null");
-                }
-                income.setUser_id(transaction.getUser_id());
-                incomeService.save(income);
-            }
+        if(handler != null){
+            handler.handle(transaction);
+        }else{
+            throw new RabbitMQException("Unknown transaction type: " + transaction.getType());
+        }
+    }
 
+    private void validateTransaction(Transaction transaction){
+        if(transaction.getUser_id() == null){
+            throw new RabbitMQException("User id is null");
+        }
     }
 }
